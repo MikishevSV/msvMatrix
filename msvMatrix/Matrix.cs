@@ -2,6 +2,12 @@
 {
     public class Matrix
     {
+        public const string WrongRowCountErrMsg = "msvMatrix - RowCount - Неверное значение количества строк!";
+        public const string WrongColCountErrMsg  = "msvMatrix - ColCount - Неверное значение количества столбцов!";
+        public const string WrongDimensionErrMsg = "msvMatrix - Constructor(uint, uint, double[]) - длина массива не соответствует размерности матрицы";
+        public const string WrongRowsNumberWhenAddingErrMsg = "msvMatrix - Operator +(Matrix, Matrix) - Попытка сложить матрицы с разным количеством строк";
+        public const string WrongColumnsNumberWhenAddingErrMsg = "msvMatrix - Operator +(Matrix, Matrix) - Попытка сложить матрицы с разным количеством столбцов";
+        public const string WrongDimensionWhenMultiplyErrMsg = "msvMatrix - Operator *(Matrix, Matrix) - Попытка перемножить матрицы с неподходящей размерностью";
         private uint _RowCount; // количество строк
         public uint RowCount 
         { 
@@ -17,44 +23,44 @@
                 }
                 else
                 {
-                    throw new Exception("msvMatrix - RowCount - Неверное значение количества строк!");
+                    throw new Exception(WrongRowCountErrMsg);
                 }
             }
         }
-        private uint _ColumnCount; // количество столбцов
-        public uint ColumnCount
+        private uint _ColCount; // количество столбцов
+        public uint ColCount
         {
             get
             {
-                return _ColumnCount;
+                return _ColCount;
             }
             set
             {
                 if (value > 0)
                 {
-                    _ColumnCount = value;
+                    _ColCount = value;
                 }
                 else
                 {
-                    throw new Exception("msvMatrix - ColumnCount - Неверное значение количества столбцов!");
+                    throw new Exception(WrongColCountErrMsg);
                 }
             }
         }
         public double[,] Body; // тело матрицы
-        public Matrix(uint aRowCount, uint aColumnCount, double aValue = 0) // создание заполненной одним значением матрицы
+        public Matrix(uint aRowCount, uint aColCount, double aValue = 0) // создание заполненной одним значением матрицы
         {
             RowCount = aRowCount;
-            ColumnCount = aColumnCount;
-            Body = new double[aRowCount, aColumnCount];
+            ColCount = aColCount;
+            Body = new double[aRowCount, aColCount];
             for (uint i = 0; i < aRowCount; i++)
             {
-                for (uint j = 0; j < aColumnCount; j++)
+                for (uint j = 0; j < aColCount; j++)
                 {
                     Body[i, j] = aValue;
                 }
             }
         }
-        public Matrix(uint aOrder, double aValue = 0, bool aIsScalar = true) : this(aOrder, aOrder)// создание диоганальной или заполненной квадратной матрицы
+        public Matrix(uint aOrder, double aValue = 0, bool aIsScalar = true) : this(aOrder, aOrder) // создание диоганальной или заполненной квадратной матрицы
         {
             if (aValue != 0)
             {
@@ -77,19 +83,49 @@
                 }
             }                      
         }
-        public Matrix(uint aRowCount, uint aColumnCount, double[] aArray) : this(aRowCount, aColumnCount) // создание произвольной матрицы из одномерного массива
+        public Matrix(uint aRowCount, uint aColCount, double[] aArray) : this(aRowCount, aColCount) // создание произвольной матрицы из одномерного массива
         {
+            if (aRowCount * aColCount != aArray.Length)
+            {
+                throw new ArgumentException(WrongDimensionErrMsg);
+            }
             for (uint i = 0; i < aRowCount; i++)
             {
-                for (uint j = 0; j < aColumnCount; j++)
+                for (uint j = 0; j < aColCount; j++)
                 {
-                    this.Body[i, j] = aArray[i * aColumnCount + j];
+                    this.Body[i, j] = aArray[i * aColCount + j];
                 }
             }
         }
+        public static bool operator ==(Matrix a, Matrix b)
+        {
+            if (a.RowCount != b.RowCount)
+            {
+                return false;
+            }
+            if (a.ColCount != b.ColCount)
+            {
+                return false;
+            }
+            for (uint i = 0; i < a.RowCount; i++)
+            {
+                for (uint j = 0; j < a.ColCount; j++)
+                {
+                    if (a.Body[i, j] != b.Body[i, j])
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+        public static bool operator !=(Matrix a, Matrix b)
+        {
+            return !(a == b);
+        }
         public static Matrix operator *(double a, Matrix b)
         {
-            Matrix c = new Matrix(b.RowCount, b.ColumnCount);
+            Matrix c = new Matrix(b.RowCount, b.ColCount);
             for (uint i = 0; i < c.RowCount; i++)
             {
                 for (uint j = 0; j < c.RowCount; j++)
@@ -111,16 +147,16 @@
         {
             if (a.RowCount != b.RowCount)
             {
-                throw new ArgumentException("msvMatrix - Operator +(Matrix, Matrix) - Попытка сложить матрицы с разным количеством строк");
+                throw new ArgumentException(WrongRowsNumberWhenAddingErrMsg);
             }
-            if (a.ColumnCount != b.ColumnCount)
+            if (a.ColCount != b.ColCount)
             {
-                throw new ArgumentException("msvMatrix - Operator +(Matrix, Matrix) - Попытка сложить матрицы с разным количеством столбцов");
+                throw new ArgumentException(WrongColumnsNumberWhenAddingErrMsg);
             }
-            Matrix c = new Matrix(a.RowCount, a.ColumnCount);
+            Matrix c = new Matrix(a.RowCount, a.ColCount);
             for (uint i = 0; i < c.RowCount; i++)
             {
-                for (uint j = 0; j < c.ColumnCount; j++)
+                for (uint j = 0; j < c.ColCount; j++)
                 {
                     c.Body[i, j] = a.Body[i, j] + b.Body[i, j];
                 }
@@ -131,50 +167,6 @@
         {
             return -1 * b + a;
         }
-        public static bool operator ==(Matrix a, Matrix b)
-        {
-            if (a.RowCount != b.RowCount)
-            {
-                return false;
-            }
-            if (a.ColumnCount != b.ColumnCount)
-            {
-                return false;
-            }
-            for (uint i = 0; i < a.RowCount; i++)
-            {
-                for (uint j = 0; j < a.ColumnCount; j++)
-                {
-                    if (a.Body[i, j] != b.Body[i, j])
-                    {
-                        return false;
-                    }
-                }
-            }
-            return true;
-        }
-        public static bool operator !=(Matrix a, Matrix b)
-        {
-            return !(a == b);
-        }
-        public static Matrix operator *(Matrix a, Matrix b)
-        {
-            if (a.ColumnCount != b.RowCount)
-            {
-                throw new Exception("msvMatrix - Operator *(Matrix, Matrix) - Попытка перемножить матрицы с неподходящей размерностью");
-            }
-            Matrix c = new Matrix(a.RowCount, b.ColumnCount);
-            for (uint i = 0; i < c.RowCount; i++)
-            {
-                for (uint j = 0; j < c.ColumnCount; j++)
-                {                    
-                    for (uint k = 0; k < a.ColumnCount; k++)
-                    {
-                        c.Body[i, j] += a.Body[i, k] * b.Body[k, j];
-                    }
-                }
-            }
-            return c;
-        }
+        
     }
 }
