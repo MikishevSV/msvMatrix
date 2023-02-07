@@ -19,7 +19,7 @@ namespace msvMatrix_Test
             }
             catch (Exception e)
             {
-                Assert.Fail($"Ошибка создания пустой матрциы {e.Message}");
+                Assert.Fail($"Ошибка создания пустой матрицы {e.Message}");
             }
             Assert.IsNotNull(a);
         }

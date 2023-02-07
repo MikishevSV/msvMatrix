@@ -5,9 +5,18 @@
         public const string WrongRowCountErrMsg = "msvMatrix - RowCount - Неверное значение количества строк!";
         public const string WrongColCountErrMsg  = "msvMatrix - ColCount - Неверное значение количества столбцов!";
         public const string WrongDimensionErrMsg = "msvMatrix - Constructor(uint, uint, double[]) - длина массива не соответствует размерности матрицы";
-        public const string WrongRowsNumberWhenAddingErrMsg = "msvMatrix - Operator +(Matrix, Matrix) - Попытка сложить матрицы с разным количеством строк";
-        public const string WrongColumnsNumberWhenAddingErrMsg = "msvMatrix - Operator +(Matrix, Matrix) - Попытка сложить матрицы с разным количеством столбцов";
+        public const string WrongRowsNumberWhenAddingErrMsg = "msvMatrix - Operator +(Matrix, Matrix) - Попытка сложить/вычесть матрицы с разным количеством строк";
+        public const string WrongColumnsNumberWhenAddingErrMsg = "msvMatrix - Operator +(Matrix, Matrix) - Попытка сложить/вычесть матрицы с разным количеством столбцов";
         public const string WrongDimensionWhenMultiplyErrMsg = "msvMatrix - Operator *(Matrix, Matrix) - Попытка перемножить матрицы с неподходящей размерностью";
+        public const string WrongDimensionWhenPowErrMsg = "msvMatrix - Pow (uint) - Попытка возвести в степень не квадратную матрицу";
+        public const string NonSquareMatrixForDeterminantErrMsg = "msvMatrix - Determinant() - Для вычисления определителя матрица должна быть квадратной";
+        public const string WrongTrimRowNumErrMsg = "msvMatrix - TrimRow - неверный индекс вырезаемой строки";
+        public const string WrongTrimColNumErrMsg = "msvMatrix - TrimCOl - неверный индекс вырезаемого столбца";
+        public const string NonSquareMatrixForCofactorErrMsg = "msvMatrix - Cofactor() - Для вычисления матрицы дополнений, матрица должна быть квадратной";
+        public const string NonSquareMatrixForAdjugateErrMsg = "msvMatrix - Adjugate() - Для вычисления присоединенной, матрица должна быть квадратной";
+        public const string NonSquareMatrixForInvertErrMsg = "msvMatrix - Invert() - Для вычисления обратной, матрица должна быть квадратной";
+        public const string WrongAddRowLengthErrMsg = "msvMatrix - AddRow(double[], uint) - Длина добавляемой строки не совпадает с количеством столбцов матрицы";
+        public const string WrongAddColLengthErrMsg = "msvMatrix - AddCol(double[], uint) - Длина добавляемоuj столбца не совпадает с количеством строк матрицы";
         private uint _RowCount; // количество строк
         public uint RowCount 
         { 
@@ -47,6 +56,18 @@
             }
         }
         public double[,] Body; // тело матрицы
+        public void Print()
+        {
+            Console.WriteLine($"{RowCount} x {ColCount} :");
+            for (uint i = 0; i < RowCount; i++)
+            {
+                for (uint j = 0; j < ColCount; j++)
+                {
+                    Console.Write($"{Body[i, j]}\t");
+                }
+                Console.WriteLine();
+            }
+        }
         public Matrix(uint aRowCount, uint aColCount, double aValue = 0) // создание заполненной одним значением матрицы
         {
             RowCount = aRowCount;
@@ -123,26 +144,6 @@
         {
             return !(a == b);
         }
-        public static Matrix operator *(double a, Matrix b)
-        {
-            Matrix c = new Matrix(b.RowCount, b.ColCount);
-            for (uint i = 0; i < c.RowCount; i++)
-            {
-                for (uint j = 0; j < c.RowCount; j++)
-                {
-                    c.Body[i, j] = a * b.Body[i, j];
-                }
-            }
-            return c;
-        }
-        public static Matrix operator *(Matrix a, double b)
-        {
-            return b * a;
-        }
-        public static Matrix operator /(Matrix a, double b)
-        {
-            return a * (1 / b);
-        }
         public static Matrix operator +(Matrix a, Matrix b)
         {
             if (a.RowCount != b.RowCount)
@@ -163,10 +164,222 @@
             }
             return c;
         }        
-        public static Matrix operator -(Matrix a, Matrix b) 
+        public static Matrix operator *(double a, Matrix b)
+        {
+            Matrix c = new Matrix(b.RowCount, b.ColCount);
+            for (uint i = 0; i < c.RowCount; i++)
+            {
+                for (uint j = 0; j < c.ColCount; j++)
+                {
+                    c.Body[i, j] = a * b.Body[i, j];
+                }
+            }
+            return c;
+        }
+        public static Matrix operator *(Matrix a, double b)
+        {
+            return b * a;
+        }
+        public static Matrix operator -(Matrix a, Matrix b)
         {
             return -1 * b + a;
+        }        
+        public static Matrix operator /(Matrix a, double b)
+        {
+            return a * (1 / b);
         }
-        
+        public static Matrix operator *(Matrix a, Matrix b)
+        {
+            if (a.ColCount != b.RowCount)
+            {
+                throw new ArgumentException(WrongDimensionWhenMultiplyErrMsg);
+            }
+            Matrix c = new Matrix(a.RowCount, b.ColCount);
+            for (uint i = 0; i < a.RowCount; i++)
+            {
+                for (uint j = 0; j < b.ColCount; j++)
+                {                   
+                    for (uint k = 0; k < a.ColCount; k++)
+                    {
+                        c.Body[i, j] += a.Body[i, k] * b.Body[k, j];
+                    }
+                }
+            }
+            return c;
+        }
+        public Matrix Pow(uint aPow)
+        {
+            if (RowCount != ColCount)
+            {
+                throw new Exception(WrongDimensionWhenPowErrMsg);
+            }
+            Matrix res = new Matrix(RowCount, 1.0);
+            if (aPow == 0)
+            {
+                return res;
+            }
+            for (uint i = 0; i < aPow; i++)
+            {
+                res *= this;
+            }
+            return res;            
+        }
+        public Matrix Transp()
+        {
+            Matrix a = new Matrix(ColCount, RowCount);
+            for (uint i = 0; i < RowCount; i++)
+            {
+                for (uint j = 0; j < ColCount; j++)
+                    a.Body[j, i] = Body[i, j];
+            }
+            return a;
+        }
+        public Matrix TrimRow(uint aRow)
+        {
+            if (aRow >= RowCount)
+            {
+                throw new ArgumentException(WrongTrimRowNumErrMsg);
+            }
+            Matrix a = new Matrix(RowCount - 1, ColCount);
+            for (uint j = 0; j < ColCount; j++)
+            {
+                for (uint i = 0; i < aRow; i++)
+                {
+                    a.Body[i, j] = Body[i, j];
+                }
+                for (uint i = aRow + 1; i < RowCount; i++)
+                {
+                    a.Body[i - 1, j] = Body[i, j];
+                }
+            }                                        
+            return a;
+        }
+        public Matrix TrimCol(uint aCol)
+        {
+            if (aCol >= ColCount)
+            {
+                throw new ArgumentException(WrongTrimColNumErrMsg);
+            }
+            Matrix a = new Matrix(RowCount, ColCount - 1);
+            for (uint i = 0; i < RowCount; i++)
+            {
+                for (uint j = 0; j < aCol; j++)
+                {
+                    a.Body[i, j] = Body[i, j];
+                }
+                for (uint j = aCol + 1; j < ColCount; j++)
+                {
+                    a.Body[i, j - 1] = Body[i, j];
+                }
+            }
+            return a;
+        }        
+        public double Determinant()
+        {
+            if (RowCount != ColCount)
+            {
+                throw new Exception(NonSquareMatrixForDeterminantErrMsg);
+            }            
+            if (RowCount == 1)
+            {
+                return Body[0, 0];
+            }
+            double res = 0;
+            for (uint i = 0; i < ColCount; i++)
+            {
+                res += Math.Pow(-1, i) * Body[0, i] * TrimRow(0).TrimCol(i).Determinant();
+            }
+            return res;
+        }
+        public Matrix Cofactor()
+        {
+            if (RowCount != ColCount)
+            {
+                throw new Exception(NonSquareMatrixForCofactorErrMsg);
+            }
+            Matrix adj = new Matrix(RowCount, ColCount);
+            for (uint i = 0; i < RowCount; i++)
+            {
+                for (uint j = 0; j < RowCount; j++)
+                {
+                    adj.Body[i, j] = TrimRow(i).TrimCol(j).Determinant() * Math.Pow(-1, i + j);
+                }
+            }
+            return adj;
+        }
+        public Matrix Adjugate()
+        {
+            if (RowCount != ColCount)
+            {
+                throw new Exception(NonSquareMatrixForAdjugateErrMsg);
+            }
+            return Cofactor().Transp();
+        }        
+        public Matrix Invert()
+        {
+            if (RowCount != ColCount)
+            {
+                throw new Exception(NonSquareMatrixForInvertErrMsg);
+            }
+            return Adjugate() / Determinant();
+        }
+        public Matrix AddRow(double[] aNewRow, uint aIndex = uint.MaxValue)
+        {
+            if (aNewRow.Length != ColCount)
+            {
+                throw new ArgumentException(WrongAddRowLengthErrMsg);
+            }
+            if (aIndex > RowCount)
+            {
+                aIndex = RowCount;
+            }
+            Matrix m = new Matrix(RowCount + 1, ColCount);
+            for (uint j = 0; j < ColCount; j++)
+            {
+                for (uint i = 0; i < aIndex; i++)
+                {
+                    m.Body[i, j] = Body[i, j];
+                }
+                m.Body[aIndex, j] = aNewRow[j];
+                for (uint i = aIndex + 1; i <= RowCount; i++) 
+                {
+                    m.Body[i, j] = Body[i - 1, j];
+                }
+            }
+            return m;
+        }
+        public Matrix AddCol(double[] aNewCol, uint aIndex = uint.MaxValue)
+        {
+            if (aNewCol.Length != RowCount)
+            {
+                throw new ArgumentException(WrongAddColLengthErrMsg);
+            }
+            if (aIndex > ColCount)
+            {
+                aIndex = ColCount;
+            }
+            Matrix m = new Matrix(RowCount, ColCount + 1);
+            for (uint i = 0; i < RowCount; i++)
+            {
+                for (uint j = 0; j < aIndex; j++)
+                {
+                    m.Body[i, j] = Body[i, j];
+                }
+                m.Body[i, aIndex] = aNewCol[i];
+                for (uint j = aIndex + 1; j <= ColCount; j++)
+                {
+                    m.Body[i, j] = Body[i, j - 1];
+                }
+            }
+            return m;
+        }
+        // перестановка строки
+        // перестановка столбца
+        // преобразование строки
+        // преобразование столбца
+        // решение САУ
+        // создание матрицы по двумерному массиву
+        // создание матрицы по массиву одномерных массивов
+
     }
 }
