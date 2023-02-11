@@ -350,7 +350,64 @@ namespace msvMatrix_Test
             //assert
             Assert.IsTrue(a == b);
         }
-       
+        [TestMethod]
+        public void Test_019_CreateMatrixFromArrayOfArray()
+        {
+            //arrange
+            double[][] body = new double[2][];
+            body[0] = new double[3] { 1, 2, 3 };
+            body[1] = new double[3] { 4, 5, 6 };
+            //act
+            try
+            {
+                Matrix a = new Matrix(body);
+            }
+            //assert
+            catch
+            {
+                Assert.Fail("Ошибка создания матрицы из двумерного массива");
+            }
+        }
+        [TestMethod]
+        public void Test_020_CheckMatrixFromArrayOfArrayWithDifferentLength()
+        {
+            //arrange
+            double[][] body = new double[2][];
+            body[0] = new double[3] { 1, 2, 3 };
+            body[1] = new double[2] { 4, 5 };
+            Matrix a = null;
+            //act
+            try
+            {
+                a = new Matrix(body);
+            }
+            //assert
+            catch (Exception e)
+            {
+                if (StringAssert.Equals(e.Message, Matrix.WrongRowLengthErrMsg))
+                {
+                    return;
+                }
+            }
+            Assert.Fail("Не было выброшено необходимое исключение");      
+        }
+        [TestMethod]
+        public void Test_021_CheckMatrixFromArrayOfArray()
+        {
+            //arrange
+            uint rowA = 2;
+            uint colA = 3;
+            double[] bodyA = { 1, 2, 3, 4, 5, 6 };
+            double[][] bodyB = new double[2][];
+            bodyB[0] = new double[3] { 1, 2, 3 };
+            bodyB[1] = new double[3] { 4, 5, 6 };
+            //act            
+            Matrix a = new Matrix(rowA, colA, bodyA);
+            Matrix b = new Matrix(bodyB);
+            //assert
+            Assert.IsTrue(a == b);
+        }
+
 
     }
 }

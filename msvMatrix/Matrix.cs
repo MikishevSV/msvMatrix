@@ -5,6 +5,7 @@
         public const string WrongRowCountErrMsg = "msvMatrix - RowCount - Неверное значение количества строк!";
         public const string WrongColCountErrMsg  = "msvMatrix - ColCount - Неверное значение количества столбцов!";
         public const string WrongDimensionErrMsg = "msvMatrix - Constructor(uint, uint, double[]) - длина массива не соответствует размерности матрицы";
+        public const string WrongRowLengthErrMsg = "msvMatrix - Constructor(double[][]) - разная длина элементов массива";
         public const string WrongRowsNumberWhenAddingErrMsg = "msvMatrix - Operator +(Matrix, Matrix) - Попытка сложить/вычесть матрицы с разным количеством строк";
         public const string WrongColumnsNumberWhenAddingErrMsg = "msvMatrix - Operator +(Matrix, Matrix) - Попытка сложить/вычесть матрицы с разным количеством столбцов";
         public const string WrongDimensionWhenMultiplyErrMsg = "msvMatrix - Operator *(Matrix, Matrix) - Попытка перемножить матрицы с неподходящей размерностью";
@@ -131,7 +132,20 @@
                 }
             }
         }
-
+        public Matrix(double[][] aBody) : this((uint)aBody.Length, (uint)aBody[0].Length) // создание матрицы по массиву одномерных массивов
+        {
+            for (uint i = 0; i < RowCount; i++)
+            {
+                if (aBody[i].Length != ColCount)
+                {
+                    throw new Exception(WrongRowLengthErrMsg);                    
+                }
+                for (uint j = 0; j < ColCount; j++)
+                {
+                    Body[i, j] = aBody[i][j];
+                }
+            }
+        }
         public static bool operator ==(Matrix a, Matrix b)
         {
             if (a.RowCount != b.RowCount)
@@ -391,8 +405,6 @@
         // перестановка столбца
         // преобразование строки
         // преобразование столбца
-        // решение САУ        
-        // создание матрицы по массиву одномерных массивов
-
+        // решение САУ                
     }
 }
