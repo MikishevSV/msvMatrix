@@ -73,15 +73,18 @@
             RowCount = aRowCount;
             ColCount = aColCount;
             Body = new double[aRowCount, aColCount];
-            for (uint i = 0; i < aRowCount; i++)
+            if (aValue != 0)
             {
-                for (uint j = 0; j < aColCount; j++)
+                for (uint i = 0; i < aRowCount; i++)
                 {
-                    Body[i, j] = aValue;
+                    for (uint j = 0; j < aColCount; j++)
+                    {
+                        Body[i, j] = aValue;
+                    }
                 }
             }
         }
-        public Matrix(uint aOrder, double aValue = 0, bool aIsScalar = true) : this(aOrder, aOrder) // создание диоганальной или заполненной квадратной матрицы
+        public Matrix(uint aOrder, double aValue = 0, bool aIsScalar = true) : this(aOrder, aOrder) // создание диагональной или заполненной квадратной матрицы
         {
             if (aValue != 0)
             {
@@ -104,9 +107,9 @@
                 }
             }                      
         }
-        public Matrix(uint aRowCount, uint aColCount, double[] aArray) : this(aRowCount, aColCount) // создание произвольной матрицы из одномерного массива
+        public Matrix(uint aRowCount, uint aColCount, double[] aBody) : this(aRowCount, aColCount) // создание произвольной матрицы из одномерного массива
         {
-            if (aRowCount * aColCount != aArray.Length)
+            if (aRowCount * aColCount != aBody.Length)
             {
                 throw new ArgumentException(WrongDimensionErrMsg);
             }
@@ -114,10 +117,21 @@
             {
                 for (uint j = 0; j < aColCount; j++)
                 {
-                    this.Body[i, j] = aArray[i * aColCount + j];
+                    this.Body[i, j] = aBody[i * aColCount + j];
                 }
             }
         }
+        public Matrix(double[,] aBody) : this((uint)aBody.GetUpperBound(0) + 1, (uint)(aBody.Length / (aBody.GetUpperBound(0) + 1))) // создание матрицы из двумерного массива
+        {
+            for (uint i = 0; i < RowCount; i++)
+            {
+                for (uint j = 0; j < ColCount; j++)
+                {
+                    Body[i, j] = aBody[i, j];
+                }
+            }
+        }
+
         public static bool operator ==(Matrix a, Matrix b)
         {
             if (a.RowCount != b.RowCount)
@@ -377,8 +391,7 @@
         // перестановка столбца
         // преобразование строки
         // преобразование столбца
-        // решение САУ
-        // создание матрицы по двумерному массиву
+        // решение САУ        
         // создание матрицы по массиву одномерных массивов
 
     }

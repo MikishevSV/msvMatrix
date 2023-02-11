@@ -320,6 +320,37 @@ namespace msvMatrix_Test
                 }
             }
         }
-        
+        [TestMethod]
+        public void Test_017_CreateMatrixFrom2DimensionArray()
+        {
+            //arrange
+            double[,] body = { { 1, 2 }, { 3, 4 } };
+            //act
+            try
+            {
+                Matrix a = new Matrix(body);
+            }
+            //assert
+            catch
+            {
+                Assert.Fail("Ошибка создания матрицы из двумерного массива");
+            }
+        }
+        [TestMethod]
+        public void Test_018_CheckMatrixFrom2DimensionArray()
+        {
+            //arrange
+            uint rowA = 2;
+            uint colA = 3;
+            double[] bodyA = { 1, 2, 3, 4, 5, 6 };
+            double[,] bodyB = { { 1, 2, 3 }, { 4, 5, 6 } };
+            //act            
+            Matrix a = new Matrix(rowA, colA, bodyA);
+            Matrix b = new Matrix(bodyB);
+            //assert
+            Assert.IsTrue(a == b);
+        }
+       
+
     }
 }

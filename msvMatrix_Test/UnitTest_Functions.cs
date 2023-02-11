@@ -770,7 +770,26 @@ namespace msvMatrix_Test
             //assert
             Assert.IsTrue(b == c);
         }
+        [TestMethod]
+        public void Test_038_()
+        {
+            //arrange
 
+            //act
+
+            //assert
+            Assert.IsTrue(true);
+        }
+        [TestMethod]
+        public void Test_()
+        {
+            //arrange
+
+            //act
+
+            //assert
+            Assert.IsTrue(true);
+        }
         /*               
         [TestMethod]
         public void Test_()
