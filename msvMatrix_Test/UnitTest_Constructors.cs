@@ -38,7 +38,7 @@ namespace msvMatrix_Test
             //assert
             catch (Exception e)
             {                
-                if (StringAssert.Equals(e.Message, Matrix.WrongRowCountErrMsg))
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongRowCountErrMsg))
                 {
                     return;
                 }                
@@ -60,7 +60,7 @@ namespace msvMatrix_Test
             catch (Exception e)
             {
                 //assert
-                if (StringAssert.Equals(e.Message, Matrix.WrongColCountErrMsg))
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongColCountErrMsg))
                 {
                     return;
                 }                
@@ -174,11 +174,11 @@ namespace msvMatrix_Test
             catch (Exception e)
             {
                 //assert
-                if (StringAssert.Equals(e.Message, Matrix.WrongColCountErrMsg))
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongColCountErrMsg))
                 {
                     return;
                 }
-                if (StringAssert.Equals(e.Message, Matrix.WrongRowCountErrMsg))
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongRowCountErrMsg))
                 {
                     return;
                 }
@@ -292,7 +292,7 @@ namespace msvMatrix_Test
             //assert
             catch (Exception e)
             {
-                if (StringAssert.Equals(e.Message, Matrix.WrongDimensionErrMsg))
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongDimensionErrMsg))
                 {
                     return;
                 }
@@ -384,7 +384,7 @@ namespace msvMatrix_Test
             //assert
             catch (Exception e)
             {
-                if (StringAssert.Equals(e.Message, Matrix.WrongRowLengthErrMsg))
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongRowLengthErrMsg))
                 {
                     return;
                 }

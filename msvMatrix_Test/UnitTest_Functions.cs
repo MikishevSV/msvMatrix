@@ -74,7 +74,7 @@ namespace msvMatrix_Test
             //assert
             catch (Exception e)
             {
-                if (StringAssert.Equals(e.Message, Matrix.WrongTrimRowNumErrMsg))
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongTrimRowNumErrMsg))
                 {
                     return;
                 }                
@@ -99,7 +99,7 @@ namespace msvMatrix_Test
             //assert
             catch (Exception e)
             {
-                if (StringAssert.Equals(e.Message, Matrix.WrongTrimRowNumErrMsg))
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongTrimRowNumErrMsg))
                 {
                     return;
                 }
@@ -213,7 +213,7 @@ namespace msvMatrix_Test
             //assert
             catch (Exception e)
             {
-                if (StringAssert.Equals(e.Message, Matrix.WrongTrimColNumErrMsg))
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongTrimColNumErrMsg))
                 {
                     return;
                 }
@@ -238,7 +238,7 @@ namespace msvMatrix_Test
             //assert
             catch (Exception e)
             {
-                if (StringAssert.Equals(e.Message, Matrix.WrongTrimColNumErrMsg))
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongTrimColNumErrMsg))
                 {
                     return;
                 }
@@ -348,7 +348,7 @@ namespace msvMatrix_Test
             //assert
             catch (Exception e)
             {
-                if (StringAssert.Equals(e.Message, Matrix.NonSquareMatrixForDeterminantErrMsg))
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.NonSquareMatrixForDeterminantErrMsg))
                 {
                     return;
                 }
@@ -406,7 +406,7 @@ namespace msvMatrix_Test
             //assert
             catch (Exception e)
             {
-                if (StringAssert.Equals(e.Message, Matrix.NonSquareMatrixForCofactorErrMsg))
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.NonSquareMatrixForCofactorErrMsg))
                 {
                     return;
                 }
@@ -466,7 +466,7 @@ namespace msvMatrix_Test
             //assert
             catch (Exception e)
             {
-                if (StringAssert.Equals(e.Message, Matrix.NonSquareMatrixForAdjugateErrMsg))
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.NonSquareMatrixForAdjugateErrMsg))
                 {
                     return;
                 }
@@ -525,7 +525,7 @@ namespace msvMatrix_Test
             //assert
             catch (Exception e)
             {
-                if (StringAssert.Equals(e.Message, Matrix.NonSquareMatrixForInvertErrMsg))
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.NonSquareMatrixForInvertErrMsg))
                 {
                     return;
                 }
@@ -597,7 +597,7 @@ namespace msvMatrix_Test
             //assert
             catch (Exception e)
             {
-                if (StringAssert.Equals(e.Message, Matrix.WrongAddRowLengthErrMsg))
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongAddRowLengthErrMsg))
                 {
                     return;
                 }
@@ -704,7 +704,7 @@ namespace msvMatrix_Test
             //assert
             catch (Exception e)
             {
-                if (StringAssert.Equals(e.Message, Matrix.WrongAddColLengthErrMsg))
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongAddColLengthErrMsg))
                 {
                     return;
                 }
@@ -771,24 +771,71 @@ namespace msvMatrix_Test
             Assert.IsTrue(b == c);
         }
         [TestMethod]
-        public void Test_038_()
+        public void Test_038_MoveRow()
         {
             //arrange
-
+            double[,] body = { { 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 }, { 11, 12, 13, 14, 15 }, { 16, 17, 18, 19, 20 }, { 21, 22, 23, 24, 25 } };
+            uint from = 1;
+            uint to = 3;
+            Matrix a = new Matrix(body);
+            Matrix b = null;
             //act
-
+            try
+            {
+                b = a.MoveRow(from, to);
+            }
             //assert
-            Assert.IsTrue(true);
+            catch (Exception e)
+            {
+                Assert.Fail($"Ошибка перемещения строки: {e.Message}");
+            }
+            Assert.IsNotNull(b);
         }
         [TestMethod]
-        public void Test_()
+        public void Test_039_MoveRowWrongFrom()
         {
             //arrange
-
+            double[,] body = { { 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 }, { 11, 12, 13, 14, 15 }, { 16, 17, 18, 19, 20 }, { 21, 22, 23, 24, 25 } };
+            uint from = 5;
+            uint to = 3;
+            Matrix a = new Matrix(body);
             //act
-
+            try
+            {
+                Matrix b = a.MoveRow(from, to);
+            }
             //assert
-            Assert.IsTrue(true);
+            catch (Exception e)
+            {
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongRowNumberForMovingFrom))
+                {
+                    return;
+                }
+            }
+            Assert.Fail("Не было выброшено необходимое исключение");
+        }
+        [TestMethod]
+        public void Test_040_MoveRowWrongTo()
+        {
+            //arrange
+            double[,] body = { { 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 }, { 11, 12, 13, 14, 15 }, { 16, 17, 18, 19, 20 }, { 21, 22, 23, 24, 25 } };
+            uint from = 1;
+            uint to = 7;
+            Matrix a = new Matrix(body);
+            //act
+            try
+            {
+                Matrix b = a.MoveRow(from, to);
+            }
+            //assert
+            catch (Exception e)
+            {
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongRowNumberForMovingTo))
+                {
+                    return;
+                }
+            }
+            Assert.Fail("Не было выброшено необходимое исключение");
         }
         /*               
         [TestMethod]

@@ -1,23 +1,7 @@
 ﻿namespace msvMatrix
 {
     public class Matrix
-    {
-        public const string WrongRowCountErrMsg = "msvMatrix - RowCount - Неверное значение количества строк!";
-        public const string WrongColCountErrMsg  = "msvMatrix - ColCount - Неверное значение количества столбцов!";
-        public const string WrongDimensionErrMsg = "msvMatrix - Constructor(uint, uint, double[]) - длина массива не соответствует размерности матрицы";
-        public const string WrongRowLengthErrMsg = "msvMatrix - Constructor(double[][]) - разная длина элементов массива";
-        public const string WrongRowsNumberWhenAddingErrMsg = "msvMatrix - Operator +(Matrix, Matrix) - Попытка сложить/вычесть матрицы с разным количеством строк";
-        public const string WrongColumnsNumberWhenAddingErrMsg = "msvMatrix - Operator +(Matrix, Matrix) - Попытка сложить/вычесть матрицы с разным количеством столбцов";
-        public const string WrongDimensionWhenMultiplyErrMsg = "msvMatrix - Operator *(Matrix, Matrix) - Попытка перемножить матрицы с неподходящей размерностью";
-        public const string WrongDimensionWhenPowErrMsg = "msvMatrix - Pow (uint) - Попытка возвести в степень не квадратную матрицу";
-        public const string NonSquareMatrixForDeterminantErrMsg = "msvMatrix - Determinant() - Для вычисления определителя матрица должна быть квадратной";
-        public const string WrongTrimRowNumErrMsg = "msvMatrix - TrimRow - неверный индекс вырезаемой строки";
-        public const string WrongTrimColNumErrMsg = "msvMatrix - TrimCOl - неверный индекс вырезаемого столбца";
-        public const string NonSquareMatrixForCofactorErrMsg = "msvMatrix - Cofactor() - Для вычисления матрицы дополнений, матрица должна быть квадратной";
-        public const string NonSquareMatrixForAdjugateErrMsg = "msvMatrix - Adjugate() - Для вычисления присоединенной, матрица должна быть квадратной";
-        public const string NonSquareMatrixForInvertErrMsg = "msvMatrix - Invert() - Для вычисления обратной, матрица должна быть квадратной";
-        public const string WrongAddRowLengthErrMsg = "msvMatrix - AddRow(double[], uint) - Длина добавляемой строки не совпадает с количеством столбцов матрицы";
-        public const string WrongAddColLengthErrMsg = "msvMatrix - AddCol(double[], uint) - Длина добавляемоuj столбца не совпадает с количеством строк матрицы";
+    {           
         private uint _RowCount; // количество строк
         public uint RowCount 
         { 
@@ -33,7 +17,7 @@
                 }
                 else
                 {
-                    throw new Exception(WrongRowCountErrMsg);
+                    throw new Exception(MatrixErrMsg.WrongRowCountErrMsg);
                 }
             }
         }
@@ -52,7 +36,7 @@
                 }
                 else
                 {
-                    throw new Exception(WrongColCountErrMsg);
+                    throw new Exception(MatrixErrMsg.WrongColCountErrMsg);
                 }
             }
         }
@@ -112,7 +96,7 @@
         {
             if (aRowCount * aColCount != aBody.Length)
             {
-                throw new ArgumentException(WrongDimensionErrMsg);
+                throw new ArgumentException(MatrixErrMsg.WrongDimensionErrMsg);
             }
             for (uint i = 0; i < aRowCount; i++)
             {
@@ -138,7 +122,7 @@
             {
                 if (aBody[i].Length != ColCount)
                 {
-                    throw new Exception(WrongRowLengthErrMsg);                    
+                    throw new Exception(MatrixErrMsg.WrongRowLengthErrMsg);                    
                 }
                 for (uint j = 0; j < ColCount; j++)
                 {
@@ -176,11 +160,11 @@
         {
             if (a.RowCount != b.RowCount)
             {
-                throw new ArgumentException(WrongRowsNumberWhenAddingErrMsg);
+                throw new ArgumentException(MatrixErrMsg.WrongRowsNumberWhenAddingErrMsg);
             }
             if (a.ColCount != b.ColCount)
             {
-                throw new ArgumentException(WrongColumnsNumberWhenAddingErrMsg);
+                throw new ArgumentException(MatrixErrMsg.WrongColumnsNumberWhenAddingErrMsg);
             }
             Matrix c = new Matrix(a.RowCount, a.ColCount);
             for (uint i = 0; i < c.RowCount; i++)
@@ -220,7 +204,7 @@
         {
             if (a.ColCount != b.RowCount)
             {
-                throw new ArgumentException(WrongDimensionWhenMultiplyErrMsg);
+                throw new ArgumentException(MatrixErrMsg.WrongDimensionWhenMultiplyErrMsg);
             }
             Matrix c = new Matrix(a.RowCount, b.ColCount);
             for (uint i = 0; i < a.RowCount; i++)
@@ -239,7 +223,7 @@
         {
             if (RowCount != ColCount)
             {
-                throw new Exception(WrongDimensionWhenPowErrMsg);
+                throw new Exception(MatrixErrMsg.WrongDimensionWhenPowErrMsg);
             }
             Matrix res = new Matrix(RowCount, 1.0);
             if (aPow == 0)
@@ -266,7 +250,7 @@
         {
             if (aRow >= RowCount)
             {
-                throw new ArgumentException(WrongTrimRowNumErrMsg);
+                throw new ArgumentException(MatrixErrMsg.WrongTrimRowNumErrMsg);
             }
             Matrix a = new Matrix(RowCount - 1, ColCount);
             for (uint j = 0; j < ColCount; j++)
@@ -286,7 +270,7 @@
         {
             if (aCol >= ColCount)
             {
-                throw new ArgumentException(WrongTrimColNumErrMsg);
+                throw new ArgumentException(MatrixErrMsg.WrongTrimColNumErrMsg);
             }
             Matrix a = new Matrix(RowCount, ColCount - 1);
             for (uint i = 0; i < RowCount; i++)
@@ -306,7 +290,7 @@
         {
             if (RowCount != ColCount)
             {
-                throw new Exception(NonSquareMatrixForDeterminantErrMsg);
+                throw new Exception(MatrixErrMsg.NonSquareMatrixForDeterminantErrMsg);
             }            
             if (RowCount == 1)
             {
@@ -323,7 +307,7 @@
         {
             if (RowCount != ColCount)
             {
-                throw new Exception(NonSquareMatrixForCofactorErrMsg);
+                throw new Exception(MatrixErrMsg.NonSquareMatrixForCofactorErrMsg);
             }
             Matrix adj = new Matrix(RowCount, ColCount);
             for (uint i = 0; i < RowCount; i++)
@@ -339,7 +323,7 @@
         {
             if (RowCount != ColCount)
             {
-                throw new Exception(NonSquareMatrixForAdjugateErrMsg);
+                throw new Exception(MatrixErrMsg.NonSquareMatrixForAdjugateErrMsg);
             }
             return Cofactor().Transp();
         }        
@@ -347,7 +331,7 @@
         {
             if (RowCount != ColCount)
             {
-                throw new Exception(NonSquareMatrixForInvertErrMsg);
+                throw new Exception(MatrixErrMsg.NonSquareMatrixForInvertErrMsg);
             }
             return Adjugate() / Determinant();
         }
@@ -355,7 +339,7 @@
         {
             if (aNewRow.Length != ColCount)
             {
-                throw new ArgumentException(WrongAddRowLengthErrMsg);
+                throw new ArgumentException(MatrixErrMsg.WrongAddRowLengthErrMsg);
             }
             if (aIndex > RowCount)
             {
@@ -380,7 +364,7 @@
         {
             if (aNewCol.Length != RowCount)
             {
-                throw new ArgumentException(WrongAddColLengthErrMsg);
+                throw new ArgumentException(MatrixErrMsg.WrongAddColLengthErrMsg);
             }
             if (aIndex > ColCount)
             {
@@ -401,10 +385,26 @@
             }
             return m;
         }
+        public Matrix MoveRow(uint aFrom, uint aTo)
+        {
+            if (aFrom >= RowCount)
+            {
+                throw new Exception(MatrixErrMsg.WrongRowNumberForMovingFrom);
+            }
+            if (aTo >= RowCount)
+            {
+                throw new Exception(MatrixErrMsg.WrongRowNumberForMovingTo);
+            }
+            return new Matrix(2);
+        }
+        
         // перестановка строки
         // перестановка столбца
+        // обмен строк
+        // обмен столбцов
         // преобразование строки
         // преобразование столбца
+        // подматрица
         // решение САУ                
     }
 }

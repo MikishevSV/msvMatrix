@@ -194,7 +194,7 @@ namespace msvMatrix_Test
             //assert
             catch (Exception e) 
             {
-                if (StringAssert.Equals(e.Message, Matrix.WrongRowsNumberWhenAddingErrMsg))
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongRowsNumberWhenAddingErrMsg))
                 {
                     return;
                 }
@@ -220,7 +220,7 @@ namespace msvMatrix_Test
             //assert
             catch (Exception e)
             {
-                if (StringAssert.Equals(e.Message, Matrix.WrongColumnsNumberWhenAddingErrMsg))
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongColumnsNumberWhenAddingErrMsg))
                 {
                     return;
                 }
@@ -364,7 +364,7 @@ namespace msvMatrix_Test
             //assert
             catch (Exception e)
             {
-                if (StringAssert.Equals(e.Message, Matrix.WrongRowsNumberWhenAddingErrMsg))
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongRowsNumberWhenAddingErrMsg))
                 {
                     return;
                 }
@@ -390,7 +390,7 @@ namespace msvMatrix_Test
             //assert
             catch (Exception e)
             {
-                if (StringAssert.Equals(e.Message, Matrix.WrongColumnsNumberWhenAddingErrMsg))
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongColumnsNumberWhenAddingErrMsg))
                 {
                     return;
                 }
@@ -504,7 +504,7 @@ namespace msvMatrix_Test
             //assert
             catch (Exception e)
             {
-                if (StringAssert.Equals(e.Message, Matrix.WrongDimensionWhenMultiplyErrMsg))
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongDimensionWhenMultiplyErrMsg))
                 {
                     return;
                 }
@@ -553,7 +553,7 @@ namespace msvMatrix_Test
             // assert
             catch (Exception e)
             {
-                StringAssert.Equals(e.Message, Matrix.WrongDimensionWhenPowErrMsg);
+                StringAssert.Equals(e.Message, MatrixErrMsg.WrongDimensionWhenPowErrMsg);
                 return;
             }            
             Assert.Fail("Не было выброшено необходимое исключение");
