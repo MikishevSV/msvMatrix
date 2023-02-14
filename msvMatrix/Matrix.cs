@@ -116,6 +116,10 @@
                 }
             }
         }
+        public Matrix(Matrix m) : this(m.Body)
+        {
+
+        }
         public Matrix(double[][] aBody) : this((uint)aBody.Length, (uint)aBody[0].Length) // создание матрицы по массиву одномерных массивов
         {
             for (uint i = 0; i < RowCount; i++)
@@ -384,6 +388,58 @@
                 }
             }
             return m;
+        }        
+        public Matrix CopyRow(uint aFrom, uint aTo)
+        {
+            if (aFrom >= RowCount)
+            {
+                throw new Exception(MatrixErrMsg.WrongRowNumberForCopyingFrom);
+            }
+            if (aTo >= RowCount)
+            {
+                throw new Exception(MatrixErrMsg.WrongRowNumberForCopyingTo);
+            }
+            Matrix m = new Matrix(Body);
+            for (uint i = 0; i < ColCount; i++)
+            {
+                m.Body[aTo, i] = m.Body[aFrom, i];
+            }
+            return m;
+        }
+        public double[] Row(uint aFrom)
+        {
+            double[] d = new double[ColCount];
+            for (uint i = 0; i < ColCount; i++)
+            {
+                d[i] = Body[aFrom, i];
+            }
+            return d;
+        }
+        public Matrix CopyCol(uint aFrom, uint aTo)
+        {
+            if (aFrom >= ColCount)
+            {
+                throw new Exception(MatrixErrMsg.WrongColNumberForCopyingFrom);
+            }
+            if (aTo >= ColCount)
+            {
+                throw new Exception(MatrixErrMsg.WrongColNumberForCopyingTo);
+            }
+            Matrix m = new Matrix(Body);
+            for (uint i = 0; i < RowCount; i++)
+            {
+                m.Body[i, aTo] = m.Body[i, aFrom];
+            }
+            return m;
+        }
+        public double[] Col(uint aFrom)
+        {
+            double[] d = new double[RowCount];
+            for (uint i = 0; i < RowCount; i++)
+            {
+                d[i] = Body[i, aFrom];
+            }
+            return d;
         }
         public Matrix MoveRow(uint aFrom, uint aTo)
         {
@@ -395,13 +451,84 @@
             {
                 throw new Exception(MatrixErrMsg.WrongRowNumberForMovingTo);
             }
-            return new Matrix(2);
+            if (aFrom < aTo)
+            {
+                return AddRow(Row(aFrom), aTo + 1).TrimRow(aFrom);
+            }
+            return AddRow(Row(aFrom), aTo).TrimRow(aFrom + 1);
+        }
+        public Matrix MoveCol(uint aFrom, uint aTo)
+        {
+            if (aFrom >= ColCount)
+            {
+                throw new Exception(MatrixErrMsg.WrongColNumberForMovingFrom);
+            }
+            if (aTo >= ColCount)
+            {
+                throw new Exception(MatrixErrMsg.WrongColNumberForMovingTo);
+            }
+            if (aFrom < aTo)
+            {
+                return AddCol(Col(aFrom), aTo + 1).TrimCol(aFrom);
+            }
+            return AddCol(Col(aFrom), aTo).TrimCol(aFrom + 1);
+        }
+        public Matrix SwapRow(uint aFrom, uint aTo)
+        {
+            if (aFrom >= RowCount)
+            {
+                throw new Exception(MatrixErrMsg.WrongRowNumberForSwapFrom);
+            }
+            if (aTo >= RowCount)
+            {
+                throw new Exception(MatrixErrMsg.WrongRowNumberForSwapTo);
+            }
+            uint max, min;
+            if (aFrom > aTo)
+            {
+                max = aFrom;
+                min = aTo;
+            }
+            else if (aFrom < aTo) 
+            {
+                max = aTo;
+                min = aFrom;
+            }
+            else
+            {
+                return this;
+            }
+            return MoveRow(min, max).MoveRow(max - 1, min);
+        }
+        public Matrix SwapCol(uint aFrom, uint aTo)
+        {
+            if (aFrom >= ColCount)
+            {
+                throw new Exception(MatrixErrMsg.WrongColNumberForSwapFrom);
+            }
+            if (aTo >= ColCount)
+            {
+                throw new Exception(MatrixErrMsg.WrongColNumberForSwapTo);
+            }
+            uint max, min;
+            if (aFrom > aTo)
+            {
+                max = aFrom;
+                min = aTo;
+            }
+            else if (aFrom < aTo)
+            {
+                max = aTo;
+                min = aFrom;
+            }
+            else
+            {
+                return this;
+            }
+            return MoveCol(min, max).MoveCol(max - 1, min);
         }
         
-        // перестановка строки
-        // перестановка столбца
-        // обмен строк
-        // обмен столбцов
+        // обмен столбцов -- надо написать тесты
         // преобразование строки
         // преобразование столбца
         // подматрица

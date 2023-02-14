@@ -2,7 +2,7 @@ using msvMatrix;
 namespace msvMatrix_Test
 {
     [TestClass]
-    public class UnitTest_Functions
+    public class UnitTest_Functions_1
     {        
         [TestMethod]
         public void Test_001_Transp1()
@@ -771,7 +771,7 @@ namespace msvMatrix_Test
             Assert.IsTrue(b == c);
         }
         [TestMethod]
-        public void Test_038_MoveRow()
+        public void Test_038_CopyRow()
         {
             //arrange
             double[,] body = { { 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 }, { 11, 12, 13, 14, 15 }, { 16, 17, 18, 19, 20 }, { 21, 22, 23, 24, 25 } };
@@ -782,17 +782,17 @@ namespace msvMatrix_Test
             //act
             try
             {
-                b = a.MoveRow(from, to);
+                b = a.CopyRow(from, to);
             }
             //assert
             catch (Exception e)
             {
-                Assert.Fail($"Ошибка перемещения строки: {e.Message}");
+                Assert.Fail($"Ошибка копирования строки: {e.Message}");
             }
             Assert.IsNotNull(b);
         }
         [TestMethod]
-        public void Test_039_MoveRowWrongFrom()
+        public void Test_039_CopyRowWrongFrom()
         {
             //arrange
             double[,] body = { { 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 }, { 11, 12, 13, 14, 15 }, { 16, 17, 18, 19, 20 }, { 21, 22, 23, 24, 25 } };
@@ -802,12 +802,12 @@ namespace msvMatrix_Test
             //act
             try
             {
-                Matrix b = a.MoveRow(from, to);
+                Matrix b = a.CopyRow(from, to);
             }
             //assert
             catch (Exception e)
             {
-                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongRowNumberForMovingFrom))
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongRowNumberForCopyingFrom))
                 {
                     return;
                 }
@@ -815,7 +815,7 @@ namespace msvMatrix_Test
             Assert.Fail("Не было выброшено необходимое исключение");
         }
         [TestMethod]
-        public void Test_040_MoveRowWrongTo()
+        public void Test_040_CopyRowWrongTo()
         {
             //arrange
             double[,] body = { { 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 }, { 11, 12, 13, 14, 15 }, { 16, 17, 18, 19, 20 }, { 21, 22, 23, 24, 25 } };
@@ -825,18 +825,204 @@ namespace msvMatrix_Test
             //act
             try
             {
-                Matrix b = a.MoveRow(from, to);
+                Matrix b = a.CopyRow(from, to);
             }
             //assert
             catch (Exception e)
             {
-                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongRowNumberForMovingTo))
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongRowNumberForCopyingTo))
                 {
                     return;
                 }
             }
             Assert.Fail("Не было выброшено необходимое исключение");
         }
+        [TestMethod]
+        public void Test_041_CheckCopyRow()
+        {
+            //arrange
+            double[,] body = { { 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 }, { 11, 12, 13, 14, 15 }, { 16, 17, 18, 19, 20 }, { 21, 22, 23, 24, 25 } };
+            uint from = 1;
+            uint to = 3;
+            Matrix a = new Matrix(body);
+            //act
+            a = a.CopyRow(from, to);
+            //assert
+            for (uint i = 0; i < a.ColCount; i++)
+            {
+                if (a.Body[from, i] != a.Body[to, i])
+                {
+                    Assert.Fail($"Неверный результат копирования строки {from} в строку {to} в позиции {i} ({a.Body[from, i]} != {a.Body[to, i]})");
+                    return;
+                }
+            }            
+        }
+        [TestMethod]
+        public void Test_042_CopyCol()
+        {
+            //arrange
+            double[,] body = { { 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 }, { 11, 12, 13, 14, 15 }, { 16, 17, 18, 19, 20 }, { 21, 22, 23, 24, 25 } };
+            uint from = 1;
+            uint to = 3;
+            Matrix a = new Matrix(body);
+            Matrix b = null;
+            //act
+            try
+            {
+                b = a.CopyCol(from, to);
+            }
+            //assert
+            catch (Exception e)
+            {
+                Assert.Fail($"Ошибка копирования столбца: {e.Message}");
+            }
+            Assert.IsNotNull(b);
+        }
+        [TestMethod]
+        public void Test_043_CopyRowWrongFrom()
+        {
+            //arrange
+            double[,] body = { { 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 }, { 11, 12, 13, 14, 15 }, { 16, 17, 18, 19, 20 }, { 21, 22, 23, 24, 25 } };
+            uint from = 5;
+            uint to = 3;
+            Matrix a = new Matrix(body);
+            //act
+            try
+            {
+                Matrix b = a.CopyCol(from, to);
+            }
+            //assert
+            catch (Exception e)
+            {
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongColNumberForCopyingFrom))
+                {
+                    return;
+                }
+            }
+            Assert.Fail("Не было выброшено необходимое исключение");
+        }
+        [TestMethod]
+        public void Test_044_CopyColWrongTo()
+        {
+            //arrange
+            double[,] body = { { 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 }, { 11, 12, 13, 14, 15 }, { 16, 17, 18, 19, 20 }, { 21, 22, 23, 24, 25 } };
+            uint from = 1;
+            uint to = 7;
+            Matrix a = new Matrix(body);
+            //act
+            try
+            {
+                Matrix b = a.CopyCol(from, to);
+            }
+            //assert
+            catch (Exception e)
+            {
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongColNumberForCopyingTo))
+                {
+                    return;
+                }
+            }
+            Assert.Fail("Не было выброшено необходимое исключение");
+        }
+        [TestMethod]
+        public void Test_045_CheckCopyCol()
+        {
+            //arrange
+            double[,] body = { { 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 }, { 11, 12, 13, 14, 15 }, { 16, 17, 18, 19, 20 }, { 21, 22, 23, 24, 25 } };
+            uint from = 1;
+            uint to = 3;
+            Matrix a = new Matrix(body);
+            //act
+            a = a.CopyCol(from, to);
+            //assert
+            for (uint i = 0; i < a.RowCount; i++)
+            {
+                if (a.Body[i, from] != a.Body[i, to])
+                {
+                    Assert.Fail($"Неверный результат копирования столбца {from} в столбец {to} в позиции {i} ({a.Body[i, from]} != {a.Body[i, to]})");
+                    return;
+                }
+            }
+        }
+        [TestMethod]
+        public void Test_046_Row()
+        {
+            //arrange
+            double[,] body = { { 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 }, { 11, 12, 13, 14, 15 }, { 16, 17, 18, 19, 20 }, { 21, 22, 23, 24, 25 } };
+            uint from = 3;
+            Matrix a = new Matrix(body);
+            double[] d = null;
+            //act
+            try
+            {
+                d = a.Row(from);
+            }
+            //assert
+            catch (Exception e)
+            {
+                Assert.Fail($"Ошибка полчучения строки: {e.Message}");
+            }
+            Assert.IsNotNull(d);
+        }
+        [TestMethod]
+        public void Test_047_RowCheck()
+        {
+            //arrange
+            double[,] body = { { 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 }, { 11, 12, 13, 14, 15 }, { 16, 17, 18, 19, 20 }, { 21, 22, 23, 24, 25 } };
+            uint from = 2;
+            Matrix a = new Matrix(body);            
+            // act
+            double[] d = a.Row(from);
+            //assert
+            for (uint i = 0; i < a.ColCount; i++)
+            {
+                if (d[i] != a.Body[from, i])
+                {
+                    Assert.Fail($"Ошибка получения строки в позиции {i}");
+                    return;
+                }
+            }
+        }
+        [TestMethod]
+        public void Test_048_Col()
+        {
+            //arrange
+            double[,] body = { { 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 }, { 11, 12, 13, 14, 15 }, { 16, 17, 18, 19, 20 }, { 21, 22, 23, 24, 25 } };
+            uint from = 3;
+            Matrix a = new Matrix(body);
+            double[] d = null;
+            //act
+            try
+            {
+                d = a.Col(from);
+            }
+            //assert
+            catch (Exception e)
+            {
+                Assert.Fail($"Ошибка полчучения столбца: {e.Message}");
+            }
+            Assert.IsNotNull(d);
+        }
+        [TestMethod]
+        public void Test_049_ColCheck()
+        {
+            //arrange
+            double[,] body = { { 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 }, { 11, 12, 13, 14, 15 }, { 16, 17, 18, 19, 20 }, { 21, 22, 23, 24, 25 } };
+            uint from = 2;
+            Matrix a = new Matrix(body);            
+            // act
+            double[] d = a.Col(from);
+            //assert
+            for (uint i = 0; i < a.ColCount; i++)
+            {
+                if (d[i] != a.Body[i, from])
+                {
+                    Assert.Fail($"Ошибка в позиции {i}");
+                    return;
+                }
+            }
+        }
+        
         /*               
         [TestMethod]
         public void Test_()

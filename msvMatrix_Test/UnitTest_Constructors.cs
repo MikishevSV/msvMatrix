@@ -407,7 +407,34 @@ namespace msvMatrix_Test
             //assert
             Assert.IsTrue(a == b);
         }
-
+        [TestMethod]
+        public void Test_022_CreateMatrixFromMatrix()
+        {
+            //arrange
+            double[,] body = { { 1, 2, 3 }, { 4, 5, 6 } };
+            Matrix a = new Matrix(body);
+            //act
+            try
+            {
+                Matrix b = new Matrix(a);
+            }
+            //assert
+            catch
+            {
+                Assert.Fail("Ошибка создания матрицы из матрицы");
+            }
+        }
+        [TestMethod]
+        public void Test_023_CheckMatrixFromMatrix()
+        {
+            //arrange
+            double[,] body = { { 1, 2, 3 }, { 4, 5, 6 } };
+            Matrix a = new Matrix(body);
+            //act
+            Matrix b = new Matrix(a);
+            //assert
+            Assert.IsTrue(a == b);
+        }
 
     }
 }
