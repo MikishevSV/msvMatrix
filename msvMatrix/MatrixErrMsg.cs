@@ -36,5 +36,13 @@ namespace msvMatrix
         public const string WrongRowNumberForSwapTo             = "msvMatrix - SwapRow(uint, uint) - Неверный номер второй строки при обмене";
         public const string WrongColNumberForSwapFrom           = "msvMatrix - SwapCol(uint, uint) - Неверный номер первого столбца при обмене";
         public const string WrongColNumberForSwapTo             = "msvMatrix - SwapCol(uint, uint) - Неверный номер второго столбца при обмене";
+        public const string WrongRowNumberForMergeFrom          = "msvMatrix - MergeCol(uint, uint) - Неверный номер первой строки при слиянии";
+        public const string WrongRowNumberForMergeTo            = "msvMatrix - MergeCol(uint, uint) - Неверный номер второй строки при слиянии";
+        public const string WrongColNumberForMergeFrom          = "msvMatrix - MergeCol(uint, uint) - Неверный номер первого столбца при слиянии";
+        public const string WrongColNumberForMergeTo            = "msvMatrix - MergeCol(uint, uint) - Неверный номер второго столбца при слиянии";
+        public const string WrongSubmatrixRowNumberFrom         = "msvMatrix - Submatrix(uint, uint, uint, uint) - Неверный номер начальной строки для подматрицы";
+        public const string WrongSubmatrixRowNumberTo           = "msvMatrix - Submatrix(uint, uint, uint, uint) - Неверный номер конечной строки для подматрицы";
+        public const string WrongSubmatrixColNumberFrom         = "msvMatrix - Submatrix(uint, uint, uint, uint) - Неверный номер начального столбца для подматрицы";
+        public const string WrongSubmatrixColNumberTo           = "msvMatrix - Submatrix(uint, uint, uint, uint) - Неверный номер конечного столбца для подматрицы";
     }
 }

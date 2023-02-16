@@ -112,12 +112,7 @@ namespace msvMatrix_Test
             //assert            
             Assert.IsTrue(a == a.MoveRow(from, to));
         }
-
-
-
-
-
-
+        [TestMethod]
         public void Test_007_MoveCol()
         {
             //arrange
@@ -331,6 +326,315 @@ namespace msvMatrix_Test
             Matrix a = new Matrix(bodyA);            
             //assert
             Assert.IsTrue(a == a.SwapRow(from, to));
+        }
+        [TestMethod]
+        public void Test_019_SwapCol()
+        {
+            //arrange
+            double[,] bodyA = { { 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 }, { 11, 12, 13, 14, 15 }, { 16, 17, 18, 19, 20 }, { 21, 22, 23, 24, 25 } };
+            uint from = 1;
+            uint to = 3;
+            Matrix a = new Matrix(bodyA);
+            //act
+            Matrix b = null;
+            try
+            {
+                b = a.SwapCol(from, to);
+            }
+            //assert
+            catch (Exception e)
+            {
+                Assert.Fail($"Ошибка обмена столбцов: {e.Message}");
+            }
+        }
+        [TestMethod]
+        public void Test_020_SwapColWrongFrom()
+        {
+            //arrange
+            double[,] bodyA = { { 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 }, { 11, 12, 13, 14, 15 }, { 16, 17, 18, 19, 20 }, { 21, 22, 23, 24, 25 } };
+            uint from = 6;
+            uint to = 3;
+            Matrix a = new Matrix(bodyA);
+            //act            
+            try
+            {
+                Matrix b = a.SwapCol(from, to);
+            }
+            //assert
+            catch (Exception e)
+            {
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongColNumberForSwapFrom))
+                {
+                    return;
+                }
+            }
+            Assert.Fail("Не было выброшено необходимое исключение");
+        }
+        [TestMethod]
+        public void Test_021_SwapColWrongTo()
+        {
+            //arrange
+            double[,] bodyA = { { 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 }, { 11, 12, 13, 14, 15 }, { 16, 17, 18, 19, 20 }, { 21, 22, 23, 24, 25 } };
+            uint from = 1;
+            uint to = 5;
+            Matrix a = new Matrix(bodyA);
+            //act            
+            try
+            {
+                Matrix b = a.SwapCol(from, to);
+            }
+            //assert
+            catch (Exception e)
+            {
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongColNumberForSwapTo))
+                {
+                    return;
+                }
+            }
+            Assert.Fail("Не было выброшено необходимое исключение");
+        }
+        [TestMethod]
+        public void Test_022_CheckSwapCol1()
+        {
+            //arrange
+            double[,] bodyA = { { 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 }, { 11, 12, 13, 14, 15 }, { 16, 17, 18, 19, 20 }, { 21, 22, 23, 24, 25 } };
+            double[,] bodyB = { { 1, 4, 3, 2, 5 }, { 6, 9, 8, 7, 10 }, { 11, 14, 13, 12, 15 }, { 16, 19, 18, 17, 20 }, { 21, 24, 23, 22, 25 } };
+            uint from = 1;
+            uint to = 3;
+            Matrix a = new Matrix(bodyA);
+            Matrix b = new Matrix(bodyB);
+            //act            
+            b = b.SwapCol(from, to);
+            //assert
+            Assert.IsTrue(a == b);
+        }
+        [TestMethod]
+        public void Test_023_CheckSwapCol2()
+        {
+            //arrange
+            double[,] bodyA = { { 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 }, { 11, 12, 13, 14, 15 }, { 16, 17, 18, 19, 20 }, { 21, 22, 23, 24, 25 } };
+            double[,] bodyB = { { 1, 4, 3, 2, 5 }, { 6, 9, 8, 7, 10 }, { 11, 14, 13, 12, 15 }, { 16, 19, 18, 17, 20 }, { 21, 24, 23, 22, 25 } };
+            uint from = 3;
+            uint to = 1;
+            Matrix a = new Matrix(bodyA);
+            Matrix b = new Matrix(bodyB);
+            //act            
+            b = b.SwapCol(from, to);
+            //assert
+            Assert.IsTrue(a == b);
+        }
+        [TestMethod]
+        public void Test_024_CheckSwapCol3()
+        {
+            //arrange
+            double[,] bodyA = { { 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 }, { 11, 12, 13, 14, 15 }, { 16, 17, 18, 19, 20 }, { 21, 22, 23, 24, 25 } };
+            uint from = 3;
+            uint to = 3;
+            Matrix a = new Matrix(bodyA);
+            //assert
+            Assert.IsTrue(a == a.SwapCol(from, to));
+        }
+        [TestMethod]
+        public void Test_025_MergeRow()
+        {
+            //arrange
+            double[,] bodyA = { { 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 }, { 11, 12, 13, 14, 15 }, { 16, 17, 18, 19, 20 }, { 21, 22, 23, 24, 25 } };
+            uint from = 1;
+            uint to = 3;
+            double mult = 2;
+            Matrix a = new Matrix(bodyA);
+            //act
+            Matrix b = null;
+            try
+            {
+                b = a.MergeRow(from, to, mult);
+            }
+            //assert
+            catch (Exception e)
+            {
+                Assert.Fail($"Ошибка слияния строк: {e.Message}");
+            }
+        }
+        [TestMethod]
+        public void Test_026_MergeRowWrongFrom()
+        {
+            //arrange
+            double[,] bodyA = { { 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 }, { 11, 12, 13, 14, 15 }, { 16, 17, 18, 19, 20 }, { 21, 22, 23, 24, 25 } };
+            uint from = 6;
+            uint to = 3;
+            double mult = 2;
+            Matrix a = new Matrix(bodyA);
+            //act            
+            try
+            {
+                Matrix b = a.MergeRow(from, to, mult);
+            }
+            //assert
+            catch (Exception e)
+            {
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongRowNumberForMergeFrom))
+                {
+                    return;
+                }
+            }
+            Assert.Fail("Не было выброшено необходимое исключение");
+        }
+        [TestMethod]
+        public void Test_027_SwapRowWrongTo()
+        {
+            //arrange
+            double[,] bodyA = { { 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 }, { 11, 12, 13, 14, 15 }, { 16, 17, 18, 19, 20 }, { 21, 22, 23, 24, 25 } };
+            uint from = 1;
+            uint to = 5;
+            double mult = 2;
+            Matrix a = new Matrix(bodyA);
+            //act            
+            try
+            {
+                Matrix b = a.MergeRow(from, to, mult);
+            }
+            //assert
+            catch (Exception e)
+            {
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongRowNumberForMergeTo))
+                {
+                    return;
+                }
+            }
+            Assert.Fail("Не было выброшено необходимое исключение");
+        }
+        [TestMethod]
+        public void Test_028_CheckMergeRow1()
+        {
+            //arrange
+            double[,] bodyA = { { 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 }, { 11, 12, 13, 14, 15 }, { 16, 17, 18, 19, 20 }, { 21, 22, 23, 24, 25 } };
+            double[,] bodyB = { { 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 }, { 11, 12, 13, 14, 15 }, { 28, 31, 34, 37, 40 }, { 21, 22, 23, 24, 25 } };
+            uint from = 1;
+            uint to = 3;
+            double mult = 2;
+            Matrix a = new Matrix(bodyA);
+            Matrix b = new Matrix(bodyB);
+            //act            
+            a = a.MergeRow(from, to, mult);
+            //assert
+            Assert.IsTrue(a == b);
+        }
+        [TestMethod]
+        public void Test_029_CheckMergeRow2()
+        {
+            //arrange
+            double[,] bodyA = { { 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 }, { 11, 12, 13, 14, 15 }, { 16, 17, 18, 19, 20 }, { 21, 22, 23, 24, 25 } };
+            double[,] bodyB = { { 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 }, { 11, 12, 13, 14, 15 }, { -2, -4, -6, -8, -10 }, { 21, 22, 23, 24, 25 } };
+            uint from = 1;
+            uint to = 3;
+            double mult = -3;
+            Matrix a = new Matrix(bodyA);
+            Matrix b = new Matrix(bodyB);
+            //act            
+            a = a.MergeRow(from, to, mult);
+            //assert
+            Assert.IsTrue(a == b);
+        }
+        [TestMethod]
+        public void Test_030_MergeCol()
+        {
+            //arrange
+            double[,] bodyA = { { 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 }, { 11, 12, 13, 14, 15 }, { 16, 17, 18, 19, 20 }, { 21, 22, 23, 24, 25 } };
+            uint from = 1;
+            uint to = 3;
+            double mult = 2;
+            Matrix a = new Matrix(bodyA);
+            //act
+            Matrix b = null;
+            try
+            {
+                b = a.MergeCol(from, to, mult);
+            }
+            //assert
+            catch (Exception e)
+            {
+                Assert.Fail($"Ошибка слияния строк: {e.Message}");
+            }
+        }
+        [TestMethod]
+        public void Test_031_MergeColWrongFrom()
+        {
+            //arrange
+            double[,] bodyA = { { 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 }, { 11, 12, 13, 14, 15 }, { 16, 17, 18, 19, 20 }, { 21, 22, 23, 24, 25 } };
+            uint from = 6;
+            uint to = 3;
+            double mult = 2;
+            Matrix a = new Matrix(bodyA);
+            //act            
+            try
+            {
+                Matrix b = a.MergeCol(from, to, mult);
+            }
+            //assert
+            catch (Exception e)
+            {
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongColNumberForMergeFrom))
+                {
+                    return;
+                }
+            }
+            Assert.Fail("Не было выброшено необходимое исключение");
+        }
+        [TestMethod]
+        public void Test_032_SwapColWrongTo()
+        {
+            //arrange
+            double[,] bodyA = { { 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 }, { 11, 12, 13, 14, 15 }, { 16, 17, 18, 19, 20 }, { 21, 22, 23, 24, 25 } };
+            uint from = 1;
+            uint to = 5;
+            double mult = 2;
+            Matrix a = new Matrix(bodyA);
+            //act            
+            try
+            {
+                Matrix b = a.MergeCol(from, to, mult);
+            }
+            //assert
+            catch (Exception e)
+            {
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongColNumberForMergeTo))
+                {
+                    return;
+                }
+            }
+            Assert.Fail("Не было выброшено необходимое исключение");
+        }
+        [TestMethod]
+        public void Test_033_CheckMergeCol1()
+        {
+            //arrange
+            double[,] bodyA = { { 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 }, { 11, 12, 13, 14, 15 }, { 16, 17, 18, 19, 20 }, { 21, 22, 23, 24, 25 } };
+            double[,] bodyB = { { 1, 2, 3, 8, 5 }, { 6, 7, 8, 23, 10 }, { 11, 12, 13, 38, 15 }, { 16, 17, 18, 53, 20 }, { 21, 22, 23, 68, 25 } };
+            uint from = 1;
+            uint to = 3;
+            double mult = 2;
+            Matrix a = new Matrix(bodyA);
+            Matrix b = new Matrix(bodyB);
+            //act            
+            a = a.MergeCol(from, to, mult);
+            //assert
+            Assert.IsTrue(a == b);
+        }
+        [TestMethod]
+        public void Test_034_CheckMergeCol2()
+        {
+            //arrange
+            double[,] bodyA = { { 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 }, { 11, 12, 13, 14, 15 }, { 16, 17, 18, 19, 20 }, { 21, 22, 23, 24, 25 } };
+            double[,] bodyB = { { 1, 2, 3, -2, 5 }, { 6, 7, 8, -12, 10 }, { 11, 12, 13, -22, 15 }, { 16, 17, 18, -32, 20 }, { 21, 22, 23, -42, 25 } };
+            uint from = 1;
+            uint to = 3;
+            double mult = -3;
+            Matrix a = new Matrix(bodyA);
+            Matrix b = new Matrix(bodyB);
+            //act            
+            a = a.MergeCol(from, to, mult);
+            //assert
+            Assert.IsTrue(a == b);
         }
         /*               
         [TestMethod]

@@ -8,6 +8,6 @@ Matrix a = new Matrix(bodyA);
 Matrix b = new Matrix(bodyB);
 //act
 a.Print();
-a.SwapRow(from, to).Print();
+a.SubMatrix(1, 3, 3, 3).Print();
 
 

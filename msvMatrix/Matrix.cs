@@ -527,11 +527,87 @@
             }
             return MoveCol(min, max).MoveCol(max - 1, min);
         }
-        
-        // обмен столбцов -- надо написать тесты
-        // преобразование строки
-        // преобразование столбца
-        // подматрица
+        public Matrix MergeRow(uint aFrom, uint aTo, double aMultiplier) 
+        {
+            if (aFrom >= RowCount)
+            {
+                throw new Exception(MatrixErrMsg.WrongRowNumberForMergeFrom);
+            }
+            if (aTo >= RowCount)
+            {
+                throw new Exception(MatrixErrMsg.WrongRowNumberForMergeTo);
+            }
+            Matrix m = new Matrix(Body);
+            for (uint i = 0; i < ColCount; i++)
+            {
+                m.Body[aTo, i] += m.Body[aFrom, i] * aMultiplier;
+            }
+            return m;
+        }
+        public Matrix MergeCol(uint aFrom, uint aTo, double aMultiplier)
+        {
+            if (aFrom >= ColCount)
+            {
+                throw new Exception(MatrixErrMsg.WrongColNumberForMergeFrom);
+            }
+            if (aTo >= ColCount)
+            {
+                throw new Exception(MatrixErrMsg.WrongColNumberForMergeTo);
+            }
+            Matrix m = new Matrix(Body);
+            for (uint i = 0; i < RowCount; i++)
+            {
+                m.Body[i, aTo] += m.Body[i, aFrom] * aMultiplier;
+            }
+            return m;
+        }
+        public Matrix SubMatrix(uint aRowFrom, uint aRowTo, uint aColFrom, uint aColTo)
+        {
+            if (aRowFrom > RowCount)
+            {
+                throw new Exception(MatrixErrMsg.WrongSubmatrixRowNumberFrom);
+            }
+            if (aRowTo > RowCount)
+            {
+                throw new Exception(MatrixErrMsg.WrongSubmatrixRowNumberTo);
+            }
+            if (aColFrom > ColCount)
+            {
+                throw new Exception(MatrixErrMsg.WrongSubmatrixColNumberFrom);
+            }
+            if (aColTo > ColCount)
+            {
+                throw new Exception(MatrixErrMsg.WrongSubmatrixColNumberTo);
+            }
+            Matrix m = new Matrix(Body);
+            uint rowMin = Math.Min(aRowFrom, aRowTo);
+            uint rowMax = Math.Max(aRowFrom, aRowTo);
+            uint colMin = Math.Min(aColFrom, aColTo);
+            uint colMax = Math.Max(aColFrom, aColTo);
+            for (uint i = 0; i < rowMin; i++)
+            {
+                m = m.TrimRow(0);
+            }
+            rowMax -= rowMin; 
+            for (uint i = m.RowCount - 1; i > rowMax; i--)
+            {
+                m = m.TrimRow(i);
+            }
+            for (uint i = 0; i < colMin; i++)
+            {
+                m = m.TrimCol(0);
+            }
+            colMax -= colMin;
+            for (uint i = m.ColCount - 1; i > colMax; i--)
+            {
+                m = m.TrimCol(i);
+            }
+            // нужно написать перевороты если From > To
+
+            return m;
+        }
+
+        // подматрица - нужны тесты
         // решение САУ                
     }
 }
