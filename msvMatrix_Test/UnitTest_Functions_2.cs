@@ -636,6 +636,181 @@ namespace msvMatrix_Test
             //assert
             Assert.IsTrue(a == b);
         }
+        [TestMethod]
+        public void Test_035_Submatrix()
+        {
+            //arrange
+            double[,] bodyA = { { 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 }, { 11, 12, 13, 14, 15 }, { 16, 17, 18, 19, 20 }, { 21, 22, 23, 24, 25 } };
+            uint rowFrom = 1;
+            uint rowTo = 3;
+            uint colFrom = 1;
+            uint colTo = 3;
+            Matrix a = new Matrix(bodyA);
+            Matrix b = null;
+            //act
+            try
+            {
+                b = a.SubMatrix(rowFrom, rowTo, colFrom, colTo);
+            }
+            //assert
+            catch (Exception e)
+            {
+                Assert.Fail($"Ошибка получения подматрицы: {e.Message}");
+            }
+            Assert.IsNotNull(b);
+        }
+        [TestMethod]
+        public void Test_036_SubmatrixWrongRowFrom()
+        {
+            //arrange
+            double[,] bodyA = { { 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 }, { 11, 12, 13, 14, 15 }, { 16, 17, 18, 19, 20 }, { 21, 22, 23, 24, 25 } };
+            uint rowFrom = 10;
+            uint rowTo = 3;
+            uint colFrom = 1;
+            uint colTo = 3;
+            Matrix a = new Matrix(bodyA);            
+            //act
+            try
+            {
+                a = a.SubMatrix(rowFrom, rowTo, colFrom, colTo);
+            }
+            //assert
+            catch (Exception e)
+            {
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongSubmatrixRowNumberFrom))
+                {
+                    return;
+                }
+            }
+            Assert.Fail("Не было выброшено необходимое исключение");
+        }
+        [TestMethod]
+        public void Test_037_SubmatrixWrongRowTo()
+        {
+            //arrange
+            double[,] bodyA = { { 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 }, { 11, 12, 13, 14, 15 }, { 16, 17, 18, 19, 20 }, { 21, 22, 23, 24, 25 } };
+            uint rowFrom = 1;
+            uint rowTo = 30;
+            uint colFrom = 1;
+            uint colTo = 3;
+            Matrix a = new Matrix(bodyA);
+            //act
+            try
+            {
+                a = a.SubMatrix(rowFrom, rowTo, colFrom, colTo);
+            }
+            //assert
+            catch (Exception e)
+            {
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongSubmatrixRowNumberTo))
+                {
+                    return;
+                }
+            }
+            Assert.Fail("Не было выброшено необходимое исключение");
+        }
+        [TestMethod]
+        public void Test_038_SubmatrixWrongColFrom()
+        {
+            //arrange
+            double[,] bodyA = { { 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 }, { 11, 12, 13, 14, 15 }, { 16, 17, 18, 19, 20 }, { 21, 22, 23, 24, 25 } };
+            uint rowFrom = 1;
+            uint rowTo = 3;
+            uint colFrom = 10;
+            uint colTo = 3;
+            Matrix a = new Matrix(bodyA);
+            //act
+            try
+            {
+                a = a.SubMatrix(rowFrom, rowTo, colFrom, colTo);
+            }
+            //assert
+            catch (Exception e)
+            {
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongSubmatrixColNumberFrom))
+                {
+                    return;
+                }
+            }
+            Assert.Fail("Не было выброшено необходимое исключение");
+        }
+        [TestMethod]
+        public void Test_039_SubmatrixWrongColTo()
+        {
+            //arrange
+            double[,] bodyA = { { 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 }, { 11, 12, 13, 14, 15 }, { 16, 17, 18, 19, 20 }, { 21, 22, 23, 24, 25 } };
+            uint rowFrom = 1;
+            uint rowTo = 3;
+            uint colFrom = 1;
+            uint colTo = 30;
+            Matrix a = new Matrix(bodyA);
+            //act
+            try
+            {
+                a = a.SubMatrix(rowFrom, rowTo, colFrom, colTo);
+            }
+            //assert
+            catch (Exception e)
+            {
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongSubmatrixColNumberTo))
+                {
+                    return;
+                }
+            }
+            Assert.Fail("Не было выброшено необходимое исключение");
+        }
+        [TestMethod]
+        public void Test_040_CheckSubmatrix1()
+        {
+            //arrange
+            double[,] bodyA = { { 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 }, { 11, 12, 13, 14, 15 }, { 16, 17, 18, 19, 20 }, { 21, 22, 23, 24, 25 } };
+            uint rowFrom = 1;
+            uint rowTo = 3;
+            uint colFrom = 1;
+            uint colTo = 3;
+            Matrix a = new Matrix(bodyA);
+            double[,] bodyB = { { 7, 8, 9 }, { 12, 13, 14 }, { 17, 18, 19 } };
+            Matrix b = new Matrix(bodyB);
+            //act
+            a = a.SubMatrix(rowFrom, rowTo, colFrom, colTo);
+            //assert            
+            Assert.IsTrue(a == b);
+        }
+        [TestMethod]
+        public void Test_041_CheckSubmatrix2()
+        {
+            //arrange
+            double[,] bodyA = { { 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 }, { 11, 12, 13, 14, 15 }, { 16, 17, 18, 19, 20 }, { 21, 22, 23, 24, 25 } };
+            uint rowFrom = 3;
+            uint rowTo = 1;
+            uint colFrom = 1;
+            uint colTo = 3;
+            Matrix a = new Matrix(bodyA);
+            double[,] bodyB = { { 17, 18, 19 }, { 12, 13, 14 }, { 7, 8, 9 } };
+            Matrix b = new Matrix(bodyB);
+            //act
+            a = a.SubMatrix(rowFrom, rowTo, colFrom, colTo);
+            //assert            
+            Assert.IsTrue(a == b);
+        }
+        [TestMethod]
+        public void Test_042_CheckSubmatrix3()
+        {
+            //arrange
+            double[,] bodyA = { { 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 }, { 11, 12, 13, 14, 15 }, { 16, 17, 18, 19, 20 }, { 21, 22, 23, 24, 25 } };
+            uint rowFrom = 1;
+            uint rowTo = 3;
+            uint colFrom = 3;
+            uint colTo = 1;
+            Matrix a = new Matrix(bodyA);
+            double[,] bodyB = { { 9, 8, 7 }, { 14, 13, 12 }, { 19, 18, 17 } };
+            
+            Matrix b = new Matrix(bodyB);
+            //act
+            a = a.SubMatrix(rowFrom, rowTo, colFrom, colTo);
+            //assert            
+            Assert.IsTrue(a == b);
+        }
         /*               
         [TestMethod]
         public void Test_()

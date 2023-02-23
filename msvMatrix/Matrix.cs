@@ -601,13 +601,60 @@
             for (uint i = m.ColCount - 1; i > colMax; i--)
             {
                 m = m.TrimCol(i);
+            }            
+            if (aRowFrom > aRowTo) // перевороты если From > To
+            {
+                for (uint i = 0; i < (aRowFrom - aRowTo) / 2; i++)
+                {
+                    m = m.SwapRow(i, m.RowCount - 1 - i);
+                }
             }
-            // нужно написать перевороты если From > To
-
+            if (aColFrom > aColTo)
+            {
+                for (uint i = 0; i < (aColFrom - aColTo) / 2; i++)
+                {
+                    m = m.SwapCol(i, m.ColCount - 1 - i);
+                }
+            }
             return m;
         }
-
-        // подматрица - нужны тесты
-        // решение САУ                
+        public bool IsScalar()
+        {
+            if (RowCount == 1)
+            {
+                if (ColCount == 1)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool IsSquare()
+        {
+            if (RowCount == ColCount) 
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }                
+        // IsVectorRow
+        // IsVectorCol
+        // IsDiag
+        // ранг матрицы
+        // l-норма
+        // m-норма
+        // k-норма
+        // абсолютная величина матрицы
+        // решение СЛАУ - System of linear equations            
     }
 }

@@ -589,6 +589,128 @@ namespace msvMatrix_Test
             // assert
             Assert.IsTrue(b == c);
         }
+        [TestMethod]
+        public void Test_030_IsScalar()
+        {
+            //arrange
+            uint row = 1;
+            uint col = 1;
+            Matrix a = new Matrix(row, col);
+            bool b;
+            //act
+            try
+            {
+                b = a.IsScalar();
+            }
+            //assert
+            catch (Exception e)
+            {
+                Assert.Fail($"ќшибка проверки на скал€р: {e.Message}");                
+            }
+        }
+        [TestMethod]
+        public void Test_031_IsScalarTrue()
+        {
+            //arrange
+            uint row = 1;
+            uint col = 1;
+            Matrix a = new Matrix(row, col);
+            //act
+            bool b = a.IsScalar();
+            //assert 
+            Assert.IsTrue(b);
+        }
+        [TestMethod]
+        public void Test_032_IsScalarFalse1()
+        {
+            //arrange
+            uint row = 2;
+            uint col = 2;
+            Matrix a = new Matrix(row, col);
+            //act
+            bool b = a.IsScalar();
+            //assert 
+            Assert.IsFalse(b);
+        }
+        [TestMethod]
+        public void Test_033_IsScalarFalse2()
+        {
+            //arrange
+            uint row = 2;
+            uint col = 1;
+            Matrix a = new Matrix(row, col);
+            //act
+            bool b = a.IsScalar();
+            //assert 
+            Assert.IsFalse(b);
+        }
+        [TestMethod]
+        public void Test_034_IsScalarFalse3()
+        {
+            //arrange
+            uint row = 1;
+            uint col = 2;
+            Matrix a = new Matrix(row, col);
+            //act
+            bool b = a.IsScalar();
+            //assert 
+            Assert.IsFalse(b);
+        }
+        [TestMethod]
+        public void Test_035_IsSquare()
+        {
+            //arrange
+            uint row = 2;
+            uint col = 2;
+            Matrix a = new Matrix(row, col);
+            bool b;
+            //act
+            try
+            {
+                b = a.IsSquare();
+            }
+            //assert
+            catch (Exception e)
+            {
+                Assert.Fail($"ќшибка проверки на квадратность: {e.Message}");
+            }
+        }
+        [TestMethod]
+        public void Test_036_IsSquareTrue()
+        {
+            //arrange
+            uint row = 2;
+            uint col = 2;
+            Matrix a = new Matrix(row, col);
+            //act
+            bool b = a.IsSquare();            
+            //assert
+            Assert.IsTrue(b);
+        }
+        [TestMethod]
+        public void Test_037_IsSquareFalse1()
+        {
+            //arrange
+            uint row = 2;
+            uint col = 3;
+            Matrix a = new Matrix(row, col);
+            //act
+            bool b = a.IsSquare();
+            //assert
+            Assert.IsFalse(b);
+        }
+        [TestMethod]
+        public void Test_038_IsSquareFalse2()
+        {
+            //arrange
+            uint row = 4;
+            uint col = 3;
+            Matrix a = new Matrix(row, col);
+            //act
+            bool b = a.IsSquare();
+            //assert
+            Assert.IsFalse(b);
+        }
         /*               
         [TestMethod]
         public void Test_()
