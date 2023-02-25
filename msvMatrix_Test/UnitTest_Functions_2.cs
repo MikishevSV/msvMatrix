@@ -811,6 +811,36 @@ namespace msvMatrix_Test
             //assert            
             Assert.IsTrue(a == b);
         }
+        [TestMethod]
+        public void Test_043_Abs() 
+        {
+            //arrange
+            double[,] bodyA = { { 1, -2 }, { -3, 4 } };
+            Matrix a = new Matrix(bodyA);
+            Matrix b = null;
+            //act
+            try
+            {
+                b = a.Abs();
+            }
+            //assert
+            catch (Exception e)
+            {
+                Assert.Fail($"Ошибка получения абсолютной величины: {e.Message}");
+            }
+            Assert.IsNotNull(b);
+        }
+        [TestMethod]
+        public void Test_044_AbsCheck()
+        {
+            //arrange
+            double[,] bodyA = { { 1, -2 }, { -3, 4 } };
+            double[,] bodyB = { { 1, 2 }, { 3, 4 } };
+            Matrix a = new Matrix(bodyA);
+            Matrix b = new Matrix(bodyB);
+            //assert            
+            Assert.IsTrue(b == a.Abs());
+        }
         /*               
         [TestMethod]
         public void Test_()

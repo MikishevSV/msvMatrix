@@ -617,25 +617,7 @@
                 }
             }
             return m;
-        }
-        public bool IsScalar()
-        {
-            if (RowCount == 1)
-            {
-                if (ColCount == 1)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            else
-            {
-                return false;
-            }
-        }
+        }        
         public bool IsSquare()
         {
             if (RowCount == ColCount) 
@@ -646,10 +628,77 @@
             {
                 return false;
             }
-        }                
-        // IsVectorRow
-        // IsVectorCol
-        // IsDiag
+        } 
+        public bool IsVectorRow()
+        {
+            if (RowCount == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool IsVectorCol()
+        {
+            if (ColCount == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool IsScalar()
+        {
+            if (IsVectorCol() & IsVectorRow())
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool IsDiag()
+        {
+            if (!IsSquare())
+            {
+                return false;
+            }
+            for (uint i = 0; i < RowCount; i++)
+            {
+                for (uint j = 0; j < ColCount; j++)
+                {
+                    if (i == j)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        if (Body[i, j] != 0)
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+        public Matrix Abs()
+        {
+            Matrix m = new Matrix(RowCount, ColCount);
+            for (uint i = 0; i < RowCount; i++)
+            {
+                for (uint j = 0; j < ColCount; j++)
+                {
+                    m.Body[i, j] = Math.Abs(Body[i, j]);
+                }
+            }
+            return m;
+        }
         // ранг матрицы
         // l-норма
         // m-норма

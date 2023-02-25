@@ -588,76 +588,9 @@ namespace msvMatrix_Test
             Matrix c = a.Pow(pow);
             // assert
             Assert.IsTrue(b == c);
-        }
+        }        
         [TestMethod]
-        public void Test_030_IsScalar()
-        {
-            //arrange
-            uint row = 1;
-            uint col = 1;
-            Matrix a = new Matrix(row, col);
-            bool b;
-            //act
-            try
-            {
-                b = a.IsScalar();
-            }
-            //assert
-            catch (Exception e)
-            {
-                Assert.Fail($"ќшибка проверки на скал€р: {e.Message}");                
-            }
-        }
-        [TestMethod]
-        public void Test_031_IsScalarTrue()
-        {
-            //arrange
-            uint row = 1;
-            uint col = 1;
-            Matrix a = new Matrix(row, col);
-            //act
-            bool b = a.IsScalar();
-            //assert 
-            Assert.IsTrue(b);
-        }
-        [TestMethod]
-        public void Test_032_IsScalarFalse1()
-        {
-            //arrange
-            uint row = 2;
-            uint col = 2;
-            Matrix a = new Matrix(row, col);
-            //act
-            bool b = a.IsScalar();
-            //assert 
-            Assert.IsFalse(b);
-        }
-        [TestMethod]
-        public void Test_033_IsScalarFalse2()
-        {
-            //arrange
-            uint row = 2;
-            uint col = 1;
-            Matrix a = new Matrix(row, col);
-            //act
-            bool b = a.IsScalar();
-            //assert 
-            Assert.IsFalse(b);
-        }
-        [TestMethod]
-        public void Test_034_IsScalarFalse3()
-        {
-            //arrange
-            uint row = 1;
-            uint col = 2;
-            Matrix a = new Matrix(row, col);
-            //act
-            bool b = a.IsScalar();
-            //assert 
-            Assert.IsFalse(b);
-        }
-        [TestMethod]
-        public void Test_035_IsSquare()
+        public void Test_030_IsSquare()
         {
             //arrange
             uint row = 2;
@@ -676,7 +609,7 @@ namespace msvMatrix_Test
             }
         }
         [TestMethod]
-        public void Test_036_IsSquareTrue()
+        public void Test_031_IsSquareTrue()
         {
             //arrange
             uint row = 2;
@@ -688,7 +621,7 @@ namespace msvMatrix_Test
             Assert.IsTrue(b);
         }
         [TestMethod]
-        public void Test_037_IsSquareFalse1()
+        public void Test_032_IsSquareFalse1()
         {
             //arrange
             uint row = 2;
@@ -700,7 +633,7 @@ namespace msvMatrix_Test
             Assert.IsFalse(b);
         }
         [TestMethod]
-        public void Test_038_IsSquareFalse2()
+        public void Test_033_IsSquareFalse2()
         {
             //arrange
             uint row = 4;
@@ -711,6 +644,207 @@ namespace msvMatrix_Test
             //assert
             Assert.IsFalse(b);
         }
+        [TestMethod]
+        public void Test_034_IsVectorRow()
+        {
+            //arrange
+            uint row = 1;
+            uint col = 2;
+            Matrix a = new Matrix(row, col);
+            bool b;
+            //act
+            try
+            {
+                b = a.IsVectorRow();
+            }
+            //assert
+            catch (Exception e)
+            {
+                Assert.Fail($"ќшибка проверки на вектор-строку: {e.Message}");
+            }
+        }
+        [TestMethod]
+        public void Test_035_IsVectorRowTrue()
+        {
+            //arrange
+            uint row = 1;
+            uint col = 2;
+            Matrix a = new Matrix(row, col);
+            //act
+            bool b = a.IsVectorRow();
+            //assert
+            Assert.IsTrue(b);
+        }
+        [TestMethod]
+        public void Test_036_IsVectorRowFalse()
+        {
+            //arrange
+            uint row = 2;
+            uint col = 2;
+            Matrix a = new Matrix(row, col);
+            //act
+            bool b = a.IsVectorRow();
+            //assert
+            Assert.IsFalse(b);
+        }
+
+
+        [TestMethod]
+        public void Test_037_IsVectorCol()
+        {
+            //arrange
+            uint row = 3;
+            uint col = 1;
+            Matrix a = new Matrix(row, col);
+            bool b;
+            //act
+            try
+            {
+                b = a.IsVectorCol();
+            }
+            //assert
+            catch (Exception e)
+            {
+                Assert.Fail($"ќшибка проверки на вектор-столбец: {e.Message}");
+            }
+        }
+        [TestMethod]
+        public void Test_038_IsVectorColTrue()
+        {
+            //arrange
+            uint row = 5;
+            uint col = 1;
+            Matrix a = new Matrix(row, col);
+            //act
+            bool b = a.IsVectorCol();
+            //assert
+            Assert.IsTrue(b);
+        }
+        [TestMethod]
+        public void Test_039_IsVectorColFalse()
+        {
+            //arrange
+            uint row = 2;
+            uint col = 2;
+            Matrix a = new Matrix(row, col);
+            //act
+            bool b = a.IsVectorCol();
+            //assert
+            Assert.IsFalse(b);
+        }
+        [TestMethod]
+        public void Test_040_IsScalar()
+        {
+            //arrange
+            uint row = 1;
+            uint col = 1;
+            Matrix a = new Matrix(row, col);
+            bool b;
+            //act
+            try
+            {
+                b = a.IsScalar();
+            }
+            //assert
+            catch (Exception e)
+            {
+                Assert.Fail($"ќшибка проверки на скал€р: {e.Message}");
+            }
+        }
+        [TestMethod]
+        public void Test_041_IsScalarTrue()
+        {
+            //arrange
+            uint row = 1;
+            uint col = 1;
+            Matrix a = new Matrix(row, col);
+            //act
+            bool b = a.IsScalar();
+            //assert 
+            Assert.IsTrue(b);
+        }
+        [TestMethod]
+        public void Test_042_IsScalarFalse1()
+        {
+            //arrange
+            uint row = 2;
+            uint col = 2;
+            Matrix a = new Matrix(row, col);
+            //act
+            bool b = a.IsScalar();
+            //assert 
+            Assert.IsFalse(b);
+        }
+        [TestMethod]
+        public void Test_043_IsScalarFalse2()
+        {
+            //arrange
+            uint row = 2;
+            uint col = 1;
+            Matrix a = new Matrix(row, col);
+            //act
+            bool b = a.IsScalar();
+            //assert 
+            Assert.IsFalse(b);
+        }
+        [TestMethod]
+        public void Test_044_IsScalarFalse3()
+        {
+            //arrange
+            uint row = 1;
+            uint col = 2;
+            Matrix a = new Matrix(row, col);
+            //act
+            bool b = a.IsScalar();
+            //assert 
+            Assert.IsFalse(b);
+        }
+        [TestMethod]
+        public void Test_045_IsDiag()
+        {
+            //arrange
+            double[,] body = { { 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 }, { 11, 12, 13, 14, 15 }, { 16, 17, 18, 19, 20 }, { 21, 22, 23, 24, 25 } };
+            Matrix a = new Matrix(body);
+            bool b;
+            //act
+            try
+            {
+                b = a.IsDiag();
+            }
+            //assert
+            catch (Exception e)
+            {
+                Assert.Fail($"ќшибка проверки на диагональность: {e.Message}");
+            }
+        }
+        [TestMethod]
+        public void Test_046_IsDiagTrue()
+        {
+            //arrange
+            double[,] body = { { 1, 0, 0, 0, 0 }, { 0, 7, 0, 0, 0 }, { 0, 0, 13, 0, 0 }, { 0, 0, 0, 19, 0 }, { 0, 0, 0, 0, 25 } };
+            Matrix a = new Matrix(body);
+            //assert
+            Assert.IsTrue(a.IsDiag());
+        }
+        [TestMethod]
+        public void Test_047_IsDiagFalse1()
+        {
+            //arrange
+            double[,] body = { { 1, 0, 0, 0, 0 }, { 0, 7, 0, 0, 0 }, { 0, 0, 13, 0, 15 }, { 0, 0, 0, 19, 0 }, { 0, 0, 0, 0, 25 } };
+            Matrix a = new Matrix(body);
+            //assert
+            Assert.IsFalse(a.IsDiag());
+        }
+        [TestMethod]
+        public void Test_048_IsDiagFalse2()
+        {
+            //arrange
+            double[,] body = { { 1, 0, 0, 0, 0 }, { 0, 7, 0, 0, 0 }, { 0, 0, 13, 0, 0 }, { 0, 0, 0, 19, 0 } };
+            Matrix a = new Matrix(body);
+            //assert
+            Assert.IsFalse(a.IsDiag());
+        }
+
         /*               
         [TestMethod]
         public void Test_()
@@ -723,6 +857,7 @@ namespace msvMatrix_Test
             Assert.IsTrue(true);
         }
         */
+
     }
 }
 
