@@ -841,6 +841,108 @@ namespace msvMatrix_Test
             //assert            
             Assert.IsTrue(b == a.Abs());
         }
+        [TestMethod]
+        public void Test_045_RowSum()
+        {
+            //arrange
+            double[,] bodyA = { { 1, 2, 3 }, { 4, 5, 6 } };            
+            Matrix a = new Matrix(bodyA);
+            uint rowNum = 0;
+            //act
+            try
+            {
+                double d = a.RowSum(rowNum);
+            }
+            //assert
+            catch (Exception e)
+            {
+                Assert.Fail($"Ошибка получения суммы строки: {e.Message}");
+            }            
+        }
+        [TestMethod]
+        public void Test_046_RowSumWrongRowNum()
+        {
+            //arrange
+            double[,] bodyA = { { 1, 2, 3 }, { 4, 5, 6 } };
+            Matrix a = new Matrix(bodyA);
+            uint rowNum = 3;
+            //act
+            try
+            {
+                double d = a.RowSum(rowNum);
+            }            
+            //assert
+            catch (Exception e)
+            {
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WronRowNumberForRowSum))
+                {
+                    return;
+                }
+            }
+            Assert.Fail("Не было выброшено необходимое исключение");
+        }
+        [TestMethod]
+        public void Test_047_RowSumCheck()
+        {
+            //arrange
+            double[,] bodyA = { { 1, 2, 3 }, { 4, 5, 6 } };
+            Matrix a = new Matrix(bodyA);
+            uint rowNum = 0;
+            double d = 6;           
+            //assert            
+            Assert.IsTrue(d == a.RowSum(rowNum));
+        }
+        [TestMethod]
+        public void Test_048_ColSum()
+        {
+            //arrange
+            double[,] bodyA = { { 1, 2, 3 }, { 4, 5, 6 } };
+            Matrix a = new Matrix(bodyA);
+            uint colNum = 0;
+            //act
+            try
+            {
+                double d = a.ColSum(colNum);
+            }
+            //assert
+            catch (Exception e)
+            {
+                Assert.Fail($"Ошибка получения суммы столбца: {e.Message}");
+            }
+        }
+        [TestMethod]
+        public void Test_049_ColSumWrongRowNum()
+        {
+            //arrange
+            double[,] bodyA = { { 1, 2, 3 }, { 4, 5, 6 } };
+            Matrix a = new Matrix(bodyA);
+            uint colNum = 3;
+            //act
+            try
+            {
+                double d = a.ColSum(colNum);
+            }
+            //assert
+            catch (Exception e)
+            {
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WronColNumberForColSum))
+                {
+                    return;
+                }
+            }
+            Assert.Fail("Не было выброшено необходимое исключение");
+        }
+        [TestMethod]
+        public void Test_050_ColSumCheck()
+        {
+            //arrange
+            double[,] bodyA = { { 1, 2 }, { 3, 4 }, {5, 6 } };
+            Matrix a = new Matrix(bodyA);
+            uint colNum = 0;
+            double d = 9;
+            //assert            
+            Assert.IsTrue(d == a.ColSum(colNum));
+        }
         /*               
         [TestMethod]
         public void Test_()

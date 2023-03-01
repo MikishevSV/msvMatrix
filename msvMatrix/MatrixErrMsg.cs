@@ -44,5 +44,7 @@ namespace msvMatrix
         public const string WrongSubmatrixRowNumberTo           = "msvMatrix - Submatrix(uint, uint, uint, uint) - Неверный номер конечной строки для подматрицы";
         public const string WrongSubmatrixColNumberFrom         = "msvMatrix - Submatrix(uint, uint, uint, uint) - Неверный номер начального столбца для подматрицы";
         public const string WrongSubmatrixColNumberTo           = "msvMatrix - Submatrix(uint, uint, uint, uint) - Неверный номер конечного столбца для подматрицы";
+        public const string WronRowNumberForRowSum              = "msvMatrix - RowSum(uint) - неверный номер суммируемой строки";
+        public const string WronColNumberForColSum              = "msvMatrix - ColSum(uint) - неверный номер суммируемого столбца";
     }
 }

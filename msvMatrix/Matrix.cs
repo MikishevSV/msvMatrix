@@ -699,11 +699,78 @@
             }
             return m;
         }
+        public double RowSum(uint aRowNumber)
+        {
+            if (aRowNumber >= RowCount)
+            {
+                throw new Exception(MatrixErrMsg.WronRowNumberForRowSum);
+            }
+            double d = 0;
+            for (uint i = 0; i < ColCount; i++)
+            {
+                d += Body[aRowNumber, i];
+            }
+            return d;
+        }
+        public double ColSum(uint aColNumber)
+        {
+            if (aColNumber >= ColCount)
+            {
+                throw new Exception(MatrixErrMsg.WronColNumberForColSum);
+            }
+            double d = 0;
+            for (uint i = 0; i < RowCount; i++)
+            {
+                d += Body[i, aColNumber];
+            }
+            return d;
+        }
+        public double LNorm()
+        {
+            Matrix m = new Matrix(Body);
+            m = m.Abs();            
+            double res = 0;
+            for (uint i = 0; i < ColCount; i++ )
+            {
+                double d = m.ColSum(i);
+                if (d > res)
+                {
+                    res = d;
+                }
+            }
+            return res;
+        }
+        public double MNorm()
+        {
+            Matrix m = new Matrix(Body);
+            m = m.Abs();            
+            double res = 0;
+            for (uint i = 0; i < RowCount; i++)
+            {
+                double d = m.RowSum(i);
+                if (d > res)
+                {
+                    res = d;
+                }
+            }
+            return res;
+        }
+        public double KNorm()
+        {
+            double d = 0;
+            for (uint i = 0; i < RowCount; i++)
+            {
+                for (uint j = 0; j < ColCount; j++)
+                {
+                    d += Body[i, j] * Body[i, j];
+                }
+            }
+            return Math.Sqrt(d);
+        }
+        // l-норма - тесты
+        // m-норма - тесты
+        // k-норма - тесты
         // ранг матрицы
-        // l-норма
-        // m-норма
-        // k-норма
-        // абсолютная величина матрицы
         // решение СЛАУ - System of linear equations            
     }
 }
