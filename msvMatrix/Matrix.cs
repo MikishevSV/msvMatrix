@@ -766,11 +766,95 @@
                 }
             }
             return Math.Sqrt(d);
+        }        
+        public uint Rank()
+        {
+            Matrix m = new Matrix(Body);
+            // делаем так, чтобы количество строк было не меньше количества столбцов
+            if (RowCount < ColCount)
+            {
+                m = m.Transp();
+            }
+            uint c = 0;
+            uint count = 0;
+            while (c < m.RowCount)
+            {                
+                if (m.Body[c, c] != 0) // элемент подходит, чтобы начать элементарные преобразования
+                {
+                    for (uint i = c + 1; i < m.RowCount; i++)
+                    {
+                        if (m.Body[i, c] != 0)
+                        {
+                            m = m.MergeRow(c, i, -m.Body[i, c] / m.Body[c, c]);
+                        }
+                    }                    
+                    for (uint j = c + 1; j < m.ColCount; j++)
+                    {
+                        if (m.Body[c, j] != 0)
+                        {
+                            m = m.MergeCol(c, j, -m.Body[c, j] / m.Body[c, c]);
+                        }
+                    }                    
+                    // удаляем нулевые строки и столбцы
+                    Matrix a = m.Abs();
+                    for (uint i = m.RowCount - 1; i > c; i--)
+                    {
+                        if (a.RowSum(i) == 0)
+                        {
+                            m = m.TrimRow(i);
+                        }                        
+                    }
+                    for (uint j = m.ColCount - 1; j > c; j--)
+                    {
+                        if (a.ColSum(j) == 0)
+                        {
+                            m = m.TrimCol(j);
+                        }                        
+                    }
+                    c++;
+                }                
+                else // нужно переставить строки или столбцы
+                {
+                    bool flag = true;
+                    for (uint j = c + 1; j < ColCount; j++)
+                    {
+                        if (m.Body[c, j] != 0 )
+                        {
+                            m = m.SwapCol(c, j);
+                            flag = false;
+                            break;
+                        }
+                    }
+                    if (flag)
+                    {
+                        m = m.TrimRow(c);
+                    }
+                }                
+            }            
+            return m.RowCount;
         }
-        // l-норма - тесты
-        // m-норма - тесты
-        // k-норма - тесты
-        // ранг матрицы
-        // решение СЛАУ - System of linear equations            
+        public uint Defect()
+        {
+            return Math.Min(RowCount, ColCount) - Rank();
+        }
+        public Matrix SoLE(Matrix aRes) // System of linear equations 
+        {
+            if (!IsSquare())
+            {
+                throw new Exception("must be square matrix");
+            }
+            if (RowCount != aRes.RowCount)
+            {
+                throw new Exception("must have equal row count");
+            }
+            if (Determinant() == 0)
+            {
+                throw new Exception("can't be singular matrix");
+            }                   
+            return Invert() * aRes;
+        }
+        // System of linear equations - one more method, where ColCOunt = RowCount + 1
+        // and aRes is the last column of matrix.
+        // And tests for both methods
     }
 }

@@ -1,13 +1,13 @@
 ﻿using msvMatrix;
 
-double[,] bodyA = { { 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 }, { 11, 12, 13, 14, 15 }, { 16, 17, 18, 19, 20 }, { 21, 22, 23, 24, 25 } };
-double[,] bodyB = { { 1, 2, 3, 4, 5 }, { 11, 12, 13, 14, 15 }, { 16, 17, 18, 19, 20 }, { 6, 7, 8, 9, 10 }, { 21, 22, 23, 24, 25 } };
-uint from = 2;
-uint to = 2;
+double[,] bodyA = { { 3, -1, 0 }, { -2, 1, 1 }, { 2, -1, 4 } };
+double[] bodyB = { 5, 0, 15 };
+
 Matrix a = new Matrix(bodyA);
-Matrix b = new Matrix(bodyB);
+Matrix b = new Matrix(3, 1, bodyB);
 //act
-a.Print();
-a.SubMatrix(3, 1, 3, 1).Print();
+
+a.SoLE(b).Print();
+
 
 
