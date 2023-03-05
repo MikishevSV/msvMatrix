@@ -807,7 +807,7 @@ namespace msvMatrix_Test
             //assert
             catch (Exception e)
             {
-                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongRowNumberForCopyingFrom))
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongRowNumberForCopyingFromErrMsg))
                 {
                     return;
                 }
@@ -830,7 +830,7 @@ namespace msvMatrix_Test
             //assert
             catch (Exception e)
             {
-                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongRowNumberForCopyingTo))
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongRowNumberForCopyingToErrMsg))
                 {
                     return;
                 }
@@ -894,7 +894,7 @@ namespace msvMatrix_Test
             //assert
             catch (Exception e)
             {
-                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongColNumberForCopyingFrom))
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongColNumberForCopyingFromErrMsg))
                 {
                     return;
                 }
@@ -917,7 +917,7 @@ namespace msvMatrix_Test
             //assert
             catch (Exception e)
             {
-                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongColNumberForCopyingTo))
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongColNumberForCopyingToErrMsg))
                 {
                     return;
                 }

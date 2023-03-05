@@ -41,7 +41,7 @@ namespace msvMatrix_Test
             //assert
             catch (Exception e)
             {
-                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongRowNumberForMovingFrom))
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongRowNumberForMovingFromErrMsg))
                 {
                     return;
                 }
@@ -64,7 +64,7 @@ namespace msvMatrix_Test
             //assert
             catch (Exception e)
             {
-                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongRowNumberForMovingTo))
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongRowNumberForMovingToErrMsg))
                 {
                     return;
                 }
@@ -149,7 +149,7 @@ namespace msvMatrix_Test
             //assert
             catch (Exception e)
             {
-                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongColNumberForMovingFrom))
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongColNumberForMovingFromErrMsg))
                 {
                     return;
                 }
@@ -172,7 +172,7 @@ namespace msvMatrix_Test
             //assert
             catch (Exception e)
             {
-                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongColNumberForMovingTo))
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongColNumberForMovingToErrMsg))
                 {
                     return;
                 }
@@ -256,7 +256,7 @@ namespace msvMatrix_Test
             //assert
             catch (Exception e)
             {
-                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongRowNumberForSwapFrom)) 
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongRowNumberForSwapFromErrMsg)) 
                 {
                     return;
                 }
@@ -279,7 +279,7 @@ namespace msvMatrix_Test
             //assert
             catch (Exception e)
             {
-                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongRowNumberForSwapTo))
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongRowNumberForSwapToErrMsg))
                 {
                     return;
                 }
@@ -363,7 +363,7 @@ namespace msvMatrix_Test
             //assert
             catch (Exception e)
             {
-                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongColNumberForSwapFrom))
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongColNumberForSwapFromErrMsg))
                 {
                     return;
                 }
@@ -386,7 +386,7 @@ namespace msvMatrix_Test
             //assert
             catch (Exception e)
             {
-                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongColNumberForSwapTo))
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongColNumberForSwapToErrMsg))
                 {
                     return;
                 }
@@ -472,7 +472,7 @@ namespace msvMatrix_Test
             //assert
             catch (Exception e)
             {
-                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongRowNumberForMergeFrom))
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongRowNumberForMergeFromErrMsg))
                 {
                     return;
                 }
@@ -496,7 +496,7 @@ namespace msvMatrix_Test
             //assert
             catch (Exception e)
             {
-                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongRowNumberForMergeTo))
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongRowNumberForMergeToErrMsg))
                 {
                     return;
                 }
@@ -573,7 +573,7 @@ namespace msvMatrix_Test
             //assert
             catch (Exception e)
             {
-                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongColNumberForMergeFrom))
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongColNumberForMergeFromErrMsg))
                 {
                     return;
                 }
@@ -597,7 +597,7 @@ namespace msvMatrix_Test
             //assert
             catch (Exception e)
             {
-                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongColNumberForMergeTo))
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongColNumberForMergeToErrMsg))
                 {
                     return;
                 }
@@ -677,7 +677,7 @@ namespace msvMatrix_Test
             //assert
             catch (Exception e)
             {
-                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongSubmatrixRowNumberFrom))
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongSubmatrixRowNumberFromErrMsg))
                 {
                     return;
                 }
@@ -702,7 +702,7 @@ namespace msvMatrix_Test
             //assert
             catch (Exception e)
             {
-                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongSubmatrixRowNumberTo))
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongSubmatrixRowNumberToErrMsg))
                 {
                     return;
                 }
@@ -727,7 +727,7 @@ namespace msvMatrix_Test
             //assert
             catch (Exception e)
             {
-                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongSubmatrixColNumberFrom))
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongSubmatrixColNumberFromErrMsg))
                 {
                     return;
                 }
@@ -752,7 +752,7 @@ namespace msvMatrix_Test
             //assert
             catch (Exception e)
             {
-                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongSubmatrixColNumberTo))
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongSubmatrixColNumberToErrMsg))
                 {
                     return;
                 }
@@ -874,7 +874,7 @@ namespace msvMatrix_Test
             //assert
             catch (Exception e)
             {
-                if (StringAssert.Equals(e.Message, MatrixErrMsg.WronRowNumberForRowSum))
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WronRowNumberForRowSumErrMsg))
                 {
                     return;
                 }
@@ -925,7 +925,7 @@ namespace msvMatrix_Test
             //assert
             catch (Exception e)
             {
-                if (StringAssert.Equals(e.Message, MatrixErrMsg.WronColNumberForColSum))
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WronColNumberForColSumErrMsg))
                 {
                     return;
                 }

@@ -393,11 +393,11 @@
         {
             if (aFrom >= RowCount)
             {
-                throw new Exception(MatrixErrMsg.WrongRowNumberForCopyingFrom);
+                throw new Exception(MatrixErrMsg.WrongRowNumberForCopyingFromErrMsg);
             }
             if (aTo >= RowCount)
             {
-                throw new Exception(MatrixErrMsg.WrongRowNumberForCopyingTo);
+                throw new Exception(MatrixErrMsg.WrongRowNumberForCopyingToErrMsg);
             }
             Matrix m = new Matrix(Body);
             for (uint i = 0; i < ColCount; i++)
@@ -419,11 +419,11 @@
         {
             if (aFrom >= ColCount)
             {
-                throw new Exception(MatrixErrMsg.WrongColNumberForCopyingFrom);
+                throw new Exception(MatrixErrMsg.WrongColNumberForCopyingFromErrMsg);
             }
             if (aTo >= ColCount)
             {
-                throw new Exception(MatrixErrMsg.WrongColNumberForCopyingTo);
+                throw new Exception(MatrixErrMsg.WrongColNumberForCopyingToErrMsg);
             }
             Matrix m = new Matrix(Body);
             for (uint i = 0; i < RowCount; i++)
@@ -445,11 +445,11 @@
         {
             if (aFrom >= RowCount)
             {
-                throw new Exception(MatrixErrMsg.WrongRowNumberForMovingFrom);
+                throw new Exception(MatrixErrMsg.WrongRowNumberForMovingFromErrMsg);
             }
             if (aTo >= RowCount)
             {
-                throw new Exception(MatrixErrMsg.WrongRowNumberForMovingTo);
+                throw new Exception(MatrixErrMsg.WrongRowNumberForMovingToErrMsg);
             }
             if (aFrom < aTo)
             {
@@ -461,11 +461,11 @@
         {
             if (aFrom >= ColCount)
             {
-                throw new Exception(MatrixErrMsg.WrongColNumberForMovingFrom);
+                throw new Exception(MatrixErrMsg.WrongColNumberForMovingFromErrMsg);
             }
             if (aTo >= ColCount)
             {
-                throw new Exception(MatrixErrMsg.WrongColNumberForMovingTo);
+                throw new Exception(MatrixErrMsg.WrongColNumberForMovingToErrMsg);
             }
             if (aFrom < aTo)
             {
@@ -477,11 +477,11 @@
         {
             if (aFrom >= RowCount)
             {
-                throw new Exception(MatrixErrMsg.WrongRowNumberForSwapFrom);
+                throw new Exception(MatrixErrMsg.WrongRowNumberForSwapFromErrMsg);
             }
             if (aTo >= RowCount)
             {
-                throw new Exception(MatrixErrMsg.WrongRowNumberForSwapTo);
+                throw new Exception(MatrixErrMsg.WrongRowNumberForSwapToErrMsg);
             }
             uint max, min;
             if (aFrom > aTo)
@@ -504,11 +504,11 @@
         {
             if (aFrom >= ColCount)
             {
-                throw new Exception(MatrixErrMsg.WrongColNumberForSwapFrom);
+                throw new Exception(MatrixErrMsg.WrongColNumberForSwapFromErrMsg);
             }
             if (aTo >= ColCount)
             {
-                throw new Exception(MatrixErrMsg.WrongColNumberForSwapTo);
+                throw new Exception(MatrixErrMsg.WrongColNumberForSwapToErrMsg);
             }
             uint max, min;
             if (aFrom > aTo)
@@ -531,11 +531,11 @@
         {
             if (aFrom >= RowCount)
             {
-                throw new Exception(MatrixErrMsg.WrongRowNumberForMergeFrom);
+                throw new Exception(MatrixErrMsg.WrongRowNumberForMergeFromErrMsg);
             }
             if (aTo >= RowCount)
             {
-                throw new Exception(MatrixErrMsg.WrongRowNumberForMergeTo);
+                throw new Exception(MatrixErrMsg.WrongRowNumberForMergeToErrMsg);
             }
             Matrix m = new Matrix(Body);
             for (uint i = 0; i < ColCount; i++)
@@ -548,11 +548,11 @@
         {
             if (aFrom >= ColCount)
             {
-                throw new Exception(MatrixErrMsg.WrongColNumberForMergeFrom);
+                throw new Exception(MatrixErrMsg.WrongColNumberForMergeFromErrMsg);
             }
             if (aTo >= ColCount)
             {
-                throw new Exception(MatrixErrMsg.WrongColNumberForMergeTo);
+                throw new Exception(MatrixErrMsg.WrongColNumberForMergeToErrMsg);
             }
             Matrix m = new Matrix(Body);
             for (uint i = 0; i < RowCount; i++)
@@ -565,19 +565,19 @@
         {
             if (aRowFrom > RowCount)
             {
-                throw new Exception(MatrixErrMsg.WrongSubmatrixRowNumberFrom);
+                throw new Exception(MatrixErrMsg.WrongSubmatrixRowNumberFromErrMsg);
             }
             if (aRowTo > RowCount)
             {
-                throw new Exception(MatrixErrMsg.WrongSubmatrixRowNumberTo);
+                throw new Exception(MatrixErrMsg.WrongSubmatrixRowNumberToErrMsg);
             }
             if (aColFrom > ColCount)
             {
-                throw new Exception(MatrixErrMsg.WrongSubmatrixColNumberFrom);
+                throw new Exception(MatrixErrMsg.WrongSubmatrixColNumberFromErrMsg);
             }
             if (aColTo > ColCount)
             {
-                throw new Exception(MatrixErrMsg.WrongSubmatrixColNumberTo);
+                throw new Exception(MatrixErrMsg.WrongSubmatrixColNumberToErrMsg);
             }
             Matrix m = new Matrix(Body);
             uint rowMin = Math.Min(aRowFrom, aRowTo);
@@ -703,7 +703,7 @@
         {
             if (aRowNumber >= RowCount)
             {
-                throw new Exception(MatrixErrMsg.WronRowNumberForRowSum);
+                throw new Exception(MatrixErrMsg.WronRowNumberForRowSumErrMsg);
             }
             double d = 0;
             for (uint i = 0; i < ColCount; i++)
@@ -716,7 +716,7 @@
         {
             if (aColNumber >= ColCount)
             {
-                throw new Exception(MatrixErrMsg.WronColNumberForColSum);
+                throw new Exception(MatrixErrMsg.WronColNumberForColSumErrMsg);
             }
             double d = 0;
             for (uint i = 0; i < RowCount; i++)
@@ -841,20 +841,20 @@
         {
             if (!IsSquare())
             {
-                throw new Exception("must be square matrix");
+                throw new Exception(MatrixErrMsg.NonSquareMatrixForSoLEErrMsg);
             }
             if (RowCount != aRes.RowCount)
             {
-                throw new Exception("must have equal row count");
+                throw new Exception(MatrixErrMsg.WrongSoLEConstantTermsVectorDimensionErrMsg);
             }
             if (Determinant() == 0)
             {
-                throw new Exception("can't be singular matrix");
+                throw new Exception(MatrixErrMsg.SingularSoLEMatrixErrMsg);
             }                   
             return Invert() * aRes;
         }
         // System of linear equations - one more method, where ColCOunt = RowCount + 1
-        // and aRes is the last column of matrix.
-        // And tests for both methods
+        // and aRes is the last column of matrix.        
+        // Tests 
     }
 }
