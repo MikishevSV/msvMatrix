@@ -837,13 +837,17 @@
         {
             return Math.Min(RowCount, ColCount) - Rank();
         }
-        public Matrix SoLE(Matrix aRes) // System of linear equations 
+        public Matrix SoLE(Matrix aConstTerms) // System of linear equations 
         {
             if (!IsSquare())
             {
                 throw new Exception(MatrixErrMsg.NonSquareMatrixForSoLEErrMsg);
             }
-            if (RowCount != aRes.RowCount)
+            if (RowCount != aConstTerms.RowCount)
+            {
+                throw new Exception(MatrixErrMsg.WrongSoLEConstantTermsVectorDimensionErrMsg);
+            }
+            if (aConstTerms.ColCount != 1)
             {
                 throw new Exception(MatrixErrMsg.WrongSoLEConstantTermsVectorDimensionErrMsg);
             }
@@ -851,10 +855,15 @@
             {
                 throw new Exception(MatrixErrMsg.SingularSoLEMatrixErrMsg);
             }                   
-            return Invert() * aRes;
+            return Invert() * aConstTerms;
         }
-        // System of linear equations - one more method, where ColCOunt = RowCount + 1
-        // and aRes is the last column of matrix.        
-        // Tests 
+        public Matrix SoLE()
+        {
+            if (RowCount + 1 != ColCount )
+            {
+                throw new Exception(MatrixErrMsg.WrongDimensionForSoLEErrMsg);
+            }            
+            return SubMatrix(0, RowCount - 1, 0, ColCount - 2).SoLE(-1 * SubMatrix(0, RowCount - 1, ColCount - 1, ColCount - 1));
+        }
     }
 }

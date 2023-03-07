@@ -48,6 +48,7 @@ namespace msvMatrix
         public const string WronColNumberForColSumErrMsg = "msvMatrix - ColSum(uint) - неверный номер суммируемого столбца";
         public const string NonSquareMatrixForSoLEErrMsg = "msvMatrix - SoLE(Matrix) - для решения СЛАУ матрица д.б. квадратной";
         public const string WrongSoLEConstantTermsVectorDimensionErrMsg = "msvMatrix - SoLE(Matrix) - неверная размерность вектора свободных членов СЛАУ";
-        public const string SingularSoLEMatrixErrMsg = "msvMatrix - SoLE(Matrix) - дре решения СЛАУ матрица не должна быть вырожденной";
+        public const string SingularSoLEMatrixErrMsg = "msvMatrix - SoLE(Matrix) - для решения СЛАУ матрица не должна быть вырожденной";
+        public const string WrongDimensionForSoLEErrMsg = "msvMatrix - SoLE() - неверный размер матрицы для СЛАУ";
     }
 }

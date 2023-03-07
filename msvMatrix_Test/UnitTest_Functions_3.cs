@@ -212,7 +212,31 @@ namespace msvMatrix_Test
             Assert.Fail("Не было выброшено необходимое исключение");
         }
         [TestMethod]
-        public void Test_14_SoLE_01_SingularMatrix()
+        public void Test_14_SoLE_01_ConstantTermsNotVector()
+        {
+            //arrange
+            double[,] bodyA = { { 3, -1, 0 }, { -2, 1, 1 }, { 2, -1, 4 } };
+            Matrix a = new Matrix(bodyA);
+            double[,] bodyB = { { 5, 1 }, { 0, 1 }, { 15, 1 }, { 10, 1 } };
+            Matrix b = new Matrix(bodyB);
+            Matrix x = null;
+            //act
+            try
+            {
+                x = a.SoLE(b);
+            }
+            //assert
+            catch (Exception e)
+            {
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongSoLEConstantTermsVectorDimensionErrMsg))
+                {
+                    return;
+                }
+            }
+            Assert.Fail("Не было выброшено необходимое исключение");
+        }
+        [TestMethod]
+        public void Test_15_SoLE_01_SingularMatrix()
         {
             //arrange
             double[,] bodyA = { { 3, -1, 0 }, { -2, 1, 0 }, { 2, -1, 0 } };
@@ -236,7 +260,7 @@ namespace msvMatrix_Test
             Assert.Fail("Не было выброшено необходимое исключение");
         }
         [TestMethod]
-        public void Test_15_SoLE_01_Check()
+        public void Test_16_SoLE_01_Check()
         {
             //arrange
             double[,] bodyA = { { 3, -1, 0 }, { -2, 1, 1 }, { 2, -1, 4 } };
@@ -247,6 +271,59 @@ namespace msvMatrix_Test
             Matrix x = new Matrix(bodyX);
             //assert
             Assert.IsTrue(x == a.SoLE(b));            
+        }
+        [TestMethod]
+        public void Test_17_SoLE_02()
+        {
+            //arrange
+            double[,] bodyA = { { 2, 1, -5, 1, -8 }, { 1, -3, 0, -6, -9 }, { 0, 2, -1, 2, 5 }, { 1, 4, -7, 6, 0 } };
+            Matrix a = new Matrix(bodyA);
+            Matrix x = null;
+            //act
+            try
+            {
+                x = a.SoLE();
+            }
+            //assert
+            catch (Exception e)
+            {
+                Assert.Fail($"Ошибка решения СЛАУ: {e.Message}");
+                return;
+            }
+            Assert.IsNotNull(x);
+        }
+        [TestMethod]
+        public void Test_18_SoLE_02_WrongDimension()
+        {
+            //arrange
+            double[,] bodyA = { { 3, -1, 0 }, { -2, 1, 0 }, { 2, -1, 0 } };
+            Matrix a = new Matrix(bodyA);            
+            Matrix x = null;
+            //act
+            try
+            {
+                x = a.SoLE();
+            }
+            //assert
+            catch (Exception e)
+            {
+                if (StringAssert.Equals(e.Message, MatrixErrMsg.WrongDimensionForSoLEErrMsg))
+                {
+                    return;
+                }
+            }
+            Assert.Fail("Не было выброшено необходимое исключение");
+        }
+        [TestMethod]
+        public void Test_19_SoLE_02_Check()
+        {
+            //arrange
+            double[,] bodyA = { { 2, 1, -5, 1, -8 }, { 1, -3, 0, -6, -9 }, { 0, 2, -1, 2, 5 }, { 1, 4, -7, 6, 0 } };
+            Matrix a = new Matrix(bodyA);            
+            double[,] bodyX = { { 2.9999999999999996 }, { -4 }, { -1 }, { 1 } }; // на самом деле правильно д.б. { { 3 }, { -4 }, { -1 }, { 1 } }. погрешность точности double. Подумаю, не перейти ли на decimal.
+            Matrix x = new Matrix(bodyX);
+            //assert
+            Assert.IsTrue(x == a.SoLE());
         }
         /*               
          [TestMethod]
