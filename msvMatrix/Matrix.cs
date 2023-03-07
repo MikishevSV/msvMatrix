@@ -847,7 +847,7 @@
             {
                 throw new Exception(MatrixErrMsg.WrongSoLEConstantTermsVectorDimensionErrMsg);
             }
-            if (aConstTerms.ColCount != 1)
+            if (!aConstTerms.IsVectorCol())
             {
                 throw new Exception(MatrixErrMsg.WrongSoLEConstantTermsVectorDimensionErrMsg);
             }
